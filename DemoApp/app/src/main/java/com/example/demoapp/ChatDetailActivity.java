@@ -6,13 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.demoapp.Adapter.ChatAdapter;
 import com.example.demoapp.Models.MessageModel;
@@ -39,6 +43,7 @@ public class ChatDetailActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseStorage storage;
     FirebaseAuth auth;
+    Dialog dialog;
 
 //    final String senderId = auth.getUid();
 //
@@ -52,6 +57,7 @@ public class ChatDetailActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        dialog = new Dialog(this);
 
 
 //        getSupportActionBar().hide();
@@ -60,7 +66,7 @@ public class ChatDetailActivity extends AppCompatActivity {
         final String senderId = auth.getUid();
 
         // lấy về uid của người dùng
-      String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
+        String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
         String userName = getIntent().getStringExtra("userName");     // lấy dữ liệu userID truyền qua thông qua key = userName
         String profilePic = getIntent().getStringExtra("profilePic");  // lấy dữ liệu userID truyền qua thông qua key = profilePic
 
@@ -76,7 +82,7 @@ public class ChatDetailActivity extends AppCompatActivity {
 //        });   // nút back
 
         final ArrayList<MessageModel> messageModels = new ArrayList<>();  // tạo mảng MessageModel
-        final ChatAdapter chatAdapter = new ChatAdapter(messageModels,this,recieveId); // biến chatadapter()
+        final ChatAdapter chatAdapter = new ChatAdapter(messageModels, this, recieveId); // biến chatadapter()
 
         binding.chatRecyclerView.setAdapter(chatAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -91,8 +97,7 @@ public class ChatDetailActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         messageModels.clear();
-                        for (DataSnapshot snapshot1 : snapshot.getChildren())
-                        {
+                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                             MessageModel model = snapshot1.getValue(MessageModel.class);
                             model.setMessageId(snapshot1.getKey());
                             messageModels.add(model);
@@ -107,71 +112,77 @@ public class ChatDetailActivity extends AppCompatActivity {
                 });
 
 
-
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.sendItemShow.setVisibility(View.GONE);
-                String message = binding.enterMessage.getText().toString();
+                if (!binding.enterMessage.getText().toString().isEmpty()) {
+                    binding.sendItemShow.setVisibility(View.GONE);
+                    String message = binding.enterMessage.getText().toString();
 
-                final MessageModel model = new MessageModel(senderId,message);
-                model.setTimestamp(new Date().getTime());
-                binding.enterMessage.setText("");
-                database.getReference().child("chats")
-                        .child(senderRoom)
-                        .push()
-                        .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>(){
-                            @Override
-                    public void onSuccess(Void unused) {
-                                database.getReference().child("chats")
-                                        .child(receiverRoom)
-                                        .push()
-                                        .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                    public void onSuccess(Void unused) {
+                    final MessageModel model = new MessageModel(senderId, message);
+                    model.setTimestamp(new Date().getTime());
+                    binding.enterMessage.setText("");
+                    database.getReference().child("chats")
+                            .child(senderRoom)
+                            .push()
+                            .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            database.getReference().child("chats")
+                                    .child(receiverRoom)
+                                    .push()
+                                    .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
 
-                                            }
-                                });
-                            }
-                });
+                                }
+                            });
+                        }
+                    });
+                }else {
+
+                    Toast.makeText(ChatDetailActivity.this, "Nothing", Toast.LENGTH_SHORT).show();
+
+                   }
             }
+
+
+
+
+
         });
 
 
-
-
-
-
-        binding.sendItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 25);
-
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        final String senderId = auth.getUid();
-
-        // lấy về uid của người dùng
-        String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
-        final String senderRoom = senderId + recieveId;
-        final String receiverRoom = recieveId + senderId;
-
-        if (resultCode == Activity.RESULT_OK) {
-            Uri sFile = data.getData();
-            binding.sendItemShow.setImageURI(sFile);
-            binding.sendItemShow.setVisibility(View.VISIBLE);
-
-
-        }
-    }
+//        binding.sendItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                intent.setType("image/*");
+//                startActivityForResult(intent, 25);
+//
+//            }
+//        });
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        final String senderId = auth.getUid();
+//
+//        // lấy về uid của người dùng
+//        String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
+//        final String senderRoom = senderId + recieveId;
+//        final String receiverRoom = recieveId + senderId;
+//
+//        if (resultCode == Activity.RESULT_OK) {
+//            Uri sFile = data.getData();
+//            binding.sendItemShow.setImageURI(sFile);
+//            binding.sendItemShow.setVisibility(View.VISIBLE);
+//
+//
+//        }
+//    }
 
 
 //    @Override
@@ -215,5 +226,5 @@ public class ChatDetailActivity extends AppCompatActivity {
 //    }
 
 
-
+    }
 }

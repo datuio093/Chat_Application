@@ -13,6 +13,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,7 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener  {
 
 
     ActivityMainBinding binding;
@@ -167,11 +168,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dialog.setContentView(R.layout.aboutus);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
-                ImageView nav = (ImageView) dialog.findViewById(R.id.btn_nav);
+                ImageView nav = (ImageView) dialog.findViewById(R.id.btn_nav1);
                 nav.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.dismiss();
+                        Uri uri = Uri.parse("https://www.youtube.com/watch?v=TU-yDCgpbZw");
+                        startActivity(new Intent(Intent.ACTION_VIEW,uri));
                     }
                 });
 

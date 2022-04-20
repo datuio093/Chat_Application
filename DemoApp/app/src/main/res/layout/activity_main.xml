@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
 
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/w1"
     android:orientation="vertical">
 
 <!--    <com.google.android.material.appbar.AppBarLayout-->
@@ -59,14 +59,25 @@
             />
     </LinearLayout>
 
-    <androidx.viewpager.widget.ViewPager
+    <LinearLayout
+        android:id="@+id/ln_iewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_chat"
+        android:layout_margin="5dp">
 
-        android:id="@+id/viewPager"
-        />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_chat"
 
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+            />
+    </LinearLayout>
+
+
+
+    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content">-->
 

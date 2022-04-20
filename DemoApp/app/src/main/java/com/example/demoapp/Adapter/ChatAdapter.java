@@ -3,6 +3,8 @@ package com.example.demoapp.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -98,7 +100,14 @@ public class ChatAdapter extends RecyclerView.Adapter {
             }
         });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Uri uri = Uri.parse("https://www.youtube.com/watch?v=TU-yDCgpbZw");
+
+            }
+        });
         if(holder.getClass() == SenderViewHolder.class)
         {
             ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());

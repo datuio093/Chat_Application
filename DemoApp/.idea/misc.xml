@@ -25,6 +25,7 @@
         <entry key="..\:/DemoApp/app/src/main/res/drawable/ic_google.xml" value="0.1605" />
         <entry key="..\:/DemoApp/app/src/main/res/drawable/item_sign_in.xml" value="0.192" />
         <entry key="..\:/DemoApp/app/src/main/res/drawable/linear_bg.xml" value="0.131" />
+        <entry key="..\:/DemoApp/app/src/main/res/drawable/main_chat.xml" value="0.1905" />
         <entry key="..\:/DemoApp/app/src/main/res/drawable/nav_h_shape.xml" value="0.1" />
         <entry key="..\:/DemoApp/app/src/main/res/drawable/nav_shape.xml" value="0.18" />
         <entry key="..\:/DemoApp/app/src/main/res/drawable/tab_layout.xml" value="0.173" />
@@ -60,10 +61,11 @@
         <entry key="..\:/DemoApp/app/src/main/res/layout/activity_phone_login.xml" value="0.24864130434782608" />
         <entry key="..\:/DemoApp/app/src/main/res/layout/activity_profile.xml" value="0.14344262295081966" />
         <entry key="..\:/DemoApp/app/src/main/res/layout/activity_settings.xml" value="0.264" />
-        <entry key="..\:/DemoApp/app/src/main/res/layout/activity_sign_in.xml" value="0.4" />
+        <entry key="..\:/DemoApp/app/src/main/res/layout/activity_sign_in.xml" value="0.2" />
         <entry key="..\:/DemoApp/app/src/main/res/layout/activity_sign_up.xml" value="0.27447916666666666" />
         <entry key="..\:/DemoApp/app/src/main/res/layout/activity_video_call_out_going.xml" value="0.1" />
         <entry key="..\:/DemoApp/app/src/main/res/layout/app_bar_layout.xml" value="0.27447916666666666" />
+        <entry key="..\:/DemoApp/app/src/main/res/layout/chat_empty.xml" value="0.264" />
         <entry key="..\:/DemoApp/app/src/main/res/layout/fragment_calls.xml" value="0.27447916666666666" />
         <entry key="..\:/DemoApp/app/src/main/res/layout/fragment_chats.xml" value="0.27447916666666666" />
         <entry key="..\:/DemoApp/app/src/main/res/layout/fragment_contacts.xml" value="0.27447916666666666" />

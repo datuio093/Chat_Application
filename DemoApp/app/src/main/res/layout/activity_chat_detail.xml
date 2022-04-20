@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatDetailActivity">
+    tools:context=".ChatDetailActivity"
+
+    android:background="@drawable/w1">
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,60 +15,89 @@
         android:layout_height="match_parent"
         android:layout_above="@id/linear"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/main_chat" />
 
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/enterMessage"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_et_message"
-            android:ems="10"
-            android:hint="Enter your message"
-            android:inputType="textPersonName"
-            android:padding="10dp"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0"
+            android:background="@drawable/main_chat"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/send_item_show"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginEnd="4dp"
-            android:visibility="gone" />
+            <EditText
+                android:id="@+id/enterMessage"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
 
-        <ImageView
-            android:id="@+id/send_item"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="4dp"
+                android:background="@drawable/bg_et_message"
+                android:ems="10"
+                android:hint="Enter your message"
+                android:inputType="textPersonName"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"
+                tools:ignore="TouchTargetSizeCheck" />
 
-            app:srcCompat="@drawable/photo" />
+            <ImageView
+                android:id="@+id/send_item_show"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginEnd="4dp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!--            android:layout_marginStart="20dp"-->
+        <!--            android:layout_marginLeft="4dp"-->
+        <!--            android:layout_marginTop="5dp"-->
 
 
-        <ImageView
-            android:id="@+id/send"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="4dp"
-            app:srcCompat="@drawable/icons8_sent_24" />
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:background="@drawable/main_chat">-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/send_item"-->
+        <!--                android:layout_width="40dp"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:layout_marginStart="4dp"-->
+        <!--                android:layout_marginLeft="2dp"-->
+        <!--                android:layout_marginTop="5dp"-->
+        <!--                android:layout_marginEnd="4dp"-->
+        <!--                app:srcCompat="@drawable/ic_baseline_photo_camera_24" />-->
+        <!--        </LinearLayout>-->
+        <!--          -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/send"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="4dp"
+                app:srcCompat="@drawable/ic_baseline_send_24" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
