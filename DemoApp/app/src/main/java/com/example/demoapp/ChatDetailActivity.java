@@ -13,6 +13,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,8 +60,8 @@ public class ChatDetailActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         dialog = new Dialog(this);
-
-
+      binding.send.setVisibility(View.GONE);
+        binding.show.setVisibility(View.GONE);
 //        getSupportActionBar().hide();
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -111,7 +113,45 @@ public class ChatDetailActivity extends AppCompatActivity {
                     }
                 });
 
+        binding.show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.showInfor.setVisibility(View.VISIBLE);
+                binding.show.setVisibility(View.GONE);
+                binding.hide.setVisibility(View.VISIBLE);
+            }
+        });
+        binding.hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.showInfor.setVisibility(View.GONE);
+                binding.hide.setVisibility(View.GONE);
+                binding.show.setVisibility(View.VISIBLE);
+            }
+        });
+        binding.enterMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+                    binding.send.setVisibility(View.GONE);
+                binding.send2.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(charSequence.length() > 0) {
+                    binding.send.setVisibility(View.VISIBLE);    binding.send2.setVisibility(View.GONE);
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

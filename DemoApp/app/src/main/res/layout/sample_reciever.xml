@@ -10,22 +10,25 @@
     android:layout_marginTop="4dp"
     android:layout_marginRight="7dp"
     android:background="@drawable/bg_receive"
-    android:maxWidth="210dp"
-    android:maxHeight="400dp"
+    android:maxWidth="310dp"
+    android:maxHeight="500dp"
     android:minHeight="40dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+       android:paddingLeft="20dp"
+
+        >
 
 
         <TextView
             android:id="@+id/receiverText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:textColor="#FFFFFF"
             android:inputType="textLongMessage|textMultiLine"
             android:maxWidth="270dp"
             android:minWidth="50dp"
@@ -41,7 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="7dp"
+            android:textColor="#FFFFFF"
             android:layout_marginBottom="3dp"
             android:text="15:56 pm"
             android:textSize="10sp"
