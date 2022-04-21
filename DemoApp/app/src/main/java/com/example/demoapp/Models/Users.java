@@ -1,12 +1,12 @@
 package com.example.demoapp.Models;
 
 public class Users {
-    String profilePic, userName, mail, password, userId, lastMessage, status;
+    String profilePic, userName, mail, password, userId, lastMessage, status, Statusof;
     public Users() {
 
     }
 
-    public Users(String profilePic, String userName, String mail, String password, String userId, String lastMessage, String status) {
+    public Users(String profilePic, String userName, String mail, String password, String userId, String lastMessage, String status, String Statusof) {
         this.profilePic = profilePic;
         this.userName = userName;
         this.mail = mail;
@@ -14,6 +14,7 @@ public class Users {
         this.userId = userId;
         this.lastMessage = lastMessage;
         this.status = status;
+        this.Statusof = Statusof;
     }
 
     public Users(String userName, String mail, String password) {
@@ -76,5 +77,13 @@ public class Users {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getStatusof() {
+        return Statusof;
+    }
+
+    public void setStatusof(String statusof) {
+        this.Statusof = statusof;
     }
 }

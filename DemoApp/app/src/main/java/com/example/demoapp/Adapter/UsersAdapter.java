@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +46,16 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         Picasso.get().load(users.getProfilePic()).placeholder(R.drawable.avatar3).into(holder.image);
         holder.userName.setText(users.getUserName());
 
+
+
+        holder.check.setVisibility(View.GONE);
+
+        if(users.getStatusof().equals("Online") ) {
+            holder.check.setVisibility(View.VISIBLE);
+        }
+        else
+            holder.check.setVisibility(View.GONE);
+
         FirebaseDatabase.getInstance().getReference().child("chats")
                 .child(FirebaseAuth.getInstance().getUid() + users.getUserId())
                 .orderByChild("timestamp")
@@ -66,6 +77,41 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                     }
                 });
 
+
+
+//        FirebaseDatabase.getInstance().getReference().child("Users")
+//                .child(FirebaseAuth.getInstance().getUid())
+//                 .orderByChild("statusof")
+//                .limitToLast(1)
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        if(snapshot.hasChildren()){
+//                            for(DataSnapshot snapshot1:snapshot.getChildren() )
+//                            {
+//                                holder.online.setText( snapshot1.child("status").getValue().toString() );
+////                                if(snapshot1.child("statusof").getValue().toString().equals("online") ==true )
+////                                {
+////                                    holder.check.setVisibility(View.VISIBLE);
+////                                }
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+
+
+
+
+
+
+
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,13 +131,16 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
-        TextView userName, lastMessage;
+        TextView userName, lastMessage, online;
+        ImageButton check;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.profile_image);
             userName = itemView.findViewById(R.id.userNameList);
             lastMessage = itemView.findViewById(R.id.lastMessage);
+            check = itemView.findViewById(R.id.online_offline);
+
         }
     }
 }

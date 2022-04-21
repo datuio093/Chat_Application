@@ -35,26 +35,34 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener  {
 
 
     ActivityMainBinding binding;
     FirebaseAuth mAuth;
     Dialog dialog;
-
+    FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        database = FirebaseDatabase.getInstance();
 //        binding.lnTablayout.setVisibility(View.GONE);
 //        binding.showTablayout1.setVisibility(View.GONE);
-
-
 
         setContentView(binding.getRoot());
         dialog = new Dialog(this);
         mAuth = FirebaseAuth.getInstance();
 
+
+
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Online");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
 
 
 //        database = FirebaseDatabase.getInstance();
@@ -159,6 +167,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 startActivity(intent4);
                 break;
             case R.id.logout:
+                HashMap<String, Object> obj = new HashMap<>();
+
+                obj.put("statusof", "Offline");
+                database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                        .updateChildren(obj);
                 mAuth.signOut();
                 Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivity(intent);

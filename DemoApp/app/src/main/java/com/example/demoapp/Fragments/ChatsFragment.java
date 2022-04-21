@@ -51,7 +51,7 @@ public class ChatsFragment extends Fragment {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Users users = dataSnapshot.getValue(Users.class);
                     users.setUserId(dataSnapshot.getKey());
-                    if(!users.getUserId().equals(FirebaseAuth.getInstance().getUid())){
+                    if(!users.getUserId().equals(FirebaseAuth.getInstance().getUid())  ){
                         list.add(users);
                     }
                 }
