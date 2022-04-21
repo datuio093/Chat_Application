@@ -1,9 +1,11 @@
 package com.example.demoapp.Adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.demoapp.Models.Contacts;
+import com.example.demoapp.Models.Users;
 import com.example.demoapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +41,14 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         Contacts contacts = list.get(position);
         Picasso.get().load(contacts.getProfilePic()).placeholder(R.drawable.avatar3).into(holder.image);
         holder.name.setText(contacts.getUserName());
+
+//     holder.check_contact.setVisibility(View.GONE);
+//
+//        if(contacts.getStatusof().equals("Online") ) {
+//            holder.check_contact.setVisibility(View.VISIBLE);
+//        }
+//        else
+//            holder.check_contact.setVisibility(View.GONE);
 
 //        FirebaseDatabase.getInstance().getReference().child("Groups")
 //                .child(FirebaseAuth.getInstance().getUid() + users.getUserId())
@@ -79,11 +90,14 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name;
+        ImageButton check_contact;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.contactimage);
             name = itemView.findViewById(R.id.contactname);
+            check_contact = itemView.findViewById(R.id.online_offline_contact);
+
         }
     }
 }

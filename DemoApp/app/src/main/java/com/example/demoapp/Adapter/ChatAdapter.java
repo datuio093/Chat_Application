@@ -108,6 +108,8 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
             }
         });
+
+
         if(holder.getClass() == SenderViewHolder.class)
         {
             ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());

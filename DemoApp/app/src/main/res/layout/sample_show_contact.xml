@@ -5,15 +5,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/contactimage"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_marginLeft="5dp"
-        android:padding="5dp"
-        android:src="@drawable/avatar3"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/contactimage"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:src="@drawable/avatar3"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+        <ImageButton
+            android:id="@+id/online_offline_contact"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_above="@+id/contactimage"
+            android:layout_alignRight="@+id/contactimage"
+            android:layout_alignBottom="@+id/contactimage"
+            android:layout_marginStart="10dp"
+
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/check_online">
+        </ImageButton>
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

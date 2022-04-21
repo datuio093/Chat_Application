@@ -47,7 +47,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         holder.userName.setText(users.getUserName());
 
 
-
+         //check status
         holder.check.setVisibility(View.GONE);
 
         if(users.getStatusof().equals("Online") ) {
@@ -55,6 +55,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         }
         else
             holder.check.setVisibility(View.GONE);
+
 
         FirebaseDatabase.getInstance().getReference().child("chats")
                 .child(FirebaseAuth.getInstance().getUid() + users.getUserId())
@@ -76,7 +77,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
                     }
                 });
-
 
 
 //        FirebaseDatabase.getInstance().getReference().child("Users")
@@ -103,14 +103,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 //
 //                    }
 //                });
-
-
-
-
-
-
-
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

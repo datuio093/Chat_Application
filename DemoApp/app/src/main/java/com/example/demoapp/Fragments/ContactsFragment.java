@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,7 @@ public class ContactsFragment extends Fragment {
     @Override
     public void onStart()
     {
+
         super.onStart();
         FirebaseRecyclerOptions options =
                 new FirebaseRecyclerOptions.Builder<Contacts>()
@@ -71,11 +73,15 @@ public class ContactsFragment extends Fragment {
 
         @Override
         protected void onBindViewHolder(@NonNull ContactsViewHolder holder, int position, @NonNull Contacts model) {
+
+
+
             UserRef.child(getRef(holder.getAdapterPosition()).getKey()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if((snapshot.exists()) && (snapshot.hasChild("image")))
                     {
+
                         String userImage = snapshot.child("image").getValue().toString();
                         String profileName = snapshot.child("userName").getValue().toString();
                         String profileStatus = snapshot.child("status").getValue().toString();

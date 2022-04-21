@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         obj.put("statusof", "Online");
         database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
                 .updateChildren(obj);
+//        database.getReference().child("Contacts").child(FirebaseAuth.getInstance().getUid())
+//                .updateChildren(obj);
 
 
 //        database = FirebaseDatabase.getInstance();

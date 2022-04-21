@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -18,6 +19,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demoapp.Adapter.ChatAdapter;
@@ -185,11 +187,6 @@ public class ChatDetailActivity extends AppCompatActivity {
 
                    }
             }
-
-
-
-
-
         });
 
 
@@ -264,7 +261,16 @@ public class ChatDetailActivity extends AppCompatActivity {
 //            startActivity(intent);
 //        }
 //    }
+    }
+    public class SenderViewHolder extends RecyclerView.ViewHolder{
+        TextView senderMsg, senderTime;
+        ImageView imageView;
+        public SenderViewHolder(@NonNull View itemView) {
+            super(itemView);
 
-
+            senderMsg = itemView.findViewById(R.id.senderText);
+            senderTime = itemView.findViewById(R.id.senderTime);
+            imageView = itemView.findViewById(R.id.image_sent);
+        }
     }
 }
