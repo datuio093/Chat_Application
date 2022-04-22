@@ -17,6 +17,7 @@
             android:src="@drawable/avatar3"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
+
         <ImageButton
             android:id="@+id/online_offline_contact"
             android:layout_width="20dp"
@@ -29,8 +30,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/check_online">
-        </ImageButton>
+            android:background="@drawable/check_online"></ImageButton>
     </RelativeLayout>
 
 

@@ -144,7 +144,8 @@ public class ChatDetailActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 if(charSequence.length() > 0) {
-                    binding.send.setVisibility(View.VISIBLE);    binding.send2.setVisibility(View.GONE);
+                    binding.send.setVisibility(View.VISIBLE);
+                    binding.send2.setVisibility(View.GONE);
 
                 }
             }
@@ -160,7 +161,6 @@ public class ChatDetailActivity extends AppCompatActivity {
                 if (!binding.enterMessage.getText().toString().isEmpty()) {
                     binding.sendItemShow.setVisibility(View.GONE);
                     String message = binding.enterMessage.getText().toString();
-
                     final MessageModel model = new MessageModel(senderId, message);
                     model.setTimestamp(new Date().getTime());
                     binding.enterMessage.setText("");

@@ -20,11 +20,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
-
-    ArrayList<Contacts> list;
+    ArrayList<Users> list;
     Context context;
 
-    public ContactsAdapter(ArrayList<Contacts> list, Context context ) {
+    public ContactsAdapter(ArrayList<Users> list, Context context ) {
         this.list = list;
         this.context = context;
     }
@@ -38,13 +37,13 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Contacts contacts = list.get(position);
-        Picasso.get().load(contacts.getProfilePic()).placeholder(R.drawable.avatar3).into(holder.image);
-        holder.name.setText(contacts.getUserName());
+        Users users = list.get(position);
+        Picasso.get().load(users.getProfilePic()).placeholder(R.drawable.avatar3).into(holder.image);
+        holder.name.setText(users.getUserName());
 
-//     holder.check_contact.setVisibility(View.GONE);
-//
-//        if(contacts.getStatusof().equals("Online") ) {
+     holder.check_contact.setVisibility(View.GONE);
+
+//        if(users.getStatusof().equals("Online") ) {
 //            holder.check_contact.setVisibility(View.VISIBLE);
 //        }
 //        else
