@@ -113,19 +113,38 @@ public class ChatAdapter extends RecyclerView.Adapter {
         if(holder.getClass() == SenderViewHolder.class)
         {
             ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
-            Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((SenderViewHolder) holder).imageView);
+            if(!messageModel.getImageMess().isEmpty()  ){
+                ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
+                ((SenderViewHolder) holder).senderTime.setVisibility(View.GONE);
+                Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((SenderViewHolder) holder).imageView);
+            }
+            else
+                ((SenderViewHolder) holder).imageView.setVisibility(View.GONE);
+
             Date date = new Date(messageModel.getTimestamp());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
             String strDate = simpleDateFormat.format(date);
             ((SenderViewHolder)holder).senderTime.setText(strDate.toString());
+
+           // ((SenderViewHolder)holder).checkSeenS.setText("Đã Xem");
         }
         else
         {
             ((ReceiverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
+            if(!messageModel.getImageMess().isEmpty() ){
+                ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);
+                ((ReceiverViewHolder) holder).receiverTime.setVisibility(View.GONE);
+            Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((ReceiverViewHolder) holder).imageView);
+            }
+            else
+                ((ReceiverViewHolder) holder).imageView.setVisibility(View.GONE);
             Date date = new Date(messageModel.getTimestamp());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
             String strDate = simpleDateFormat.format(date);
             ((ReceiverViewHolder)holder).receiverTime.setText(strDate.toString());
+            String strDate1 = simpleDateFormat.format(date);
+//            ((ReceiverViewHolder)holder).checkSeenR.setText("Đã Xem");
+
         }
     }
 
@@ -135,18 +154,21 @@ public class ChatAdapter extends RecyclerView.Adapter {
     }
 
     public class ReceiverViewHolder extends RecyclerView.ViewHolder {
-        TextView receiverMsg, receiverTime;
+        TextView receiverMsg, receiverTime,checkSeenR;
+        ImageView imageView;
 
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receiverMsg = itemView.findViewById(R.id.receiverText);
             receiverTime = itemView.findViewById(R.id.receiverTime);
+   //         checkSeenR = itemView.findViewById(R.id.check_seen_reciever);
+            imageView = itemView.findViewById(R.id.image_sent);
         }
 
     }
 
     public class SenderViewHolder extends RecyclerView.ViewHolder{
-        TextView senderMsg, senderTime;
+        TextView senderMsg, senderTime, checkSeenS;
         ImageView imageView;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -154,6 +176,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
             senderMsg = itemView.findViewById(R.id.senderText);
             senderTime = itemView.findViewById(R.id.senderTime);
             imageView = itemView.findViewById(R.id.image_sent);
+     //       checkSeenS = itemView.findViewById(R.id.check_seen_sender);
         }
     }
 }

@@ -34,6 +34,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private FirebaseAuth mAuth;
 
+
     FirebaseDatabase database;
     ActivityPhoneLoginBinding binding;
     private String mVerificationId;

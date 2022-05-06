@@ -67,7 +67,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                         if(snapshot.hasChildren()){
                             for(DataSnapshot snapshot1:snapshot.getChildren())
                             {
+
                                     holder.lastMessage.setText(snapshot1.child("message").getValue().toString());
+
                             }
                         }
                     }

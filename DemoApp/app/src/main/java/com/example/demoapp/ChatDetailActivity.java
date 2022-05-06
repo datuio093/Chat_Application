@@ -7,30 +7,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demoapp.Adapter.ChatAdapter;
 import com.example.demoapp.Models.MessageModel;
-import com.example.demoapp.Models.Users;
 import com.example.demoapp.databinding.ActivityChatDetailBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -40,6 +36,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ChatDetailActivity extends AppCompatActivity {
 
@@ -50,9 +47,9 @@ public class ChatDetailActivity extends AppCompatActivity {
     Dialog dialog;
 
 //    final String senderId = auth.getUid();
-//
-//    // lấy về uid của người dùng
-//    String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
+
+    // lấy về uid của người dùng
+ //   String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +65,10 @@ public class ChatDetailActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         final String senderId = auth.getUid();
+        storage = FirebaseStorage.getInstance();
+
+        binding.totalBtnBlock.setVisibility(View.GONE);
+        binding.btnUnadd.setVisibility(View.GONE);
 
         // lấy về uid của người dùng
         String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
@@ -95,8 +96,12 @@ public class ChatDetailActivity extends AppCompatActivity {
         final String senderRoom = senderId + recieveId;
         final String receiverRoom = recieveId + senderId;
 
+
+        database.getReference().child("checkSeen")
+                .child(receiverRoom).child(recieveId).setValue("Da Xem");
+
         database.getReference().child("chats")
-                .child(senderRoom)
+                .child(receiverRoom)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -114,6 +119,22 @@ public class ChatDetailActivity extends AppCompatActivity {
 
                     }
                 });
+        binding.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.totalBtnBlock.setVisibility(View.VISIBLE);
+                binding.btnUnadd.setVisibility(View.VISIBLE);
+                binding.btnAdd.setVisibility(View.GONE);
+            }
+        });
+        binding.btnUnadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.totalBtnBlock.setVisibility(View.GONE);
+                binding.btnUnadd.setVisibility(View.GONE);
+                binding.btnAdd.setVisibility(View.VISIBLE);
+            }
+        });
 
         binding.show.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,12 +152,232 @@ public class ChatDetailActivity extends AppCompatActivity {
                 binding.show.setVisibility(View.VISIBLE);
             }
         });
+
+        FirebaseDatabase.getInstance().getReference().child("checkBlock")
+                .child(senderRoom)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if ( snapshot.child("isblock").getValue().toString().equals("true") )
+                            {binding.mainEnterMessage.setVisibility(View.GONE);
+                        binding.sendItem.setVisibility(View.GONE);}
+
+                        else
+                            binding.enterMessage.setVisibility(View.VISIBLE);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        binding.mainEnterMessage.setVisibility(View.VISIBLE);
+                    }
+                });
+        FirebaseDatabase.getInstance().getReference().child("checkBlock")
+                .child(receiverRoom)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if ( snapshot.child("isblock").getValue().toString().equals("true") )
+                        {binding.mainEnterMessage.setVisibility(View.GONE);
+                            binding.sendItem.setVisibility(View.GONE);}
+
+                        else
+                            binding.enterMessage.setVisibility(View.VISIBLE);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        binding.mainEnterMessage.setVisibility(View.VISIBLE);
+                    }
+                });
+        FirebaseDatabase.getInstance().getReference().child("checkBlock")
+                .child(senderRoom)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if ( snapshot.child("isblockhide").getValue().toString().equals("true") ) {
+                            binding.txtShowblock.setText("Block Chat");
+                        }
+
+                        else
+                            binding.txtShowblock.setText("Friend");
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        binding.mainEnterMessage.setVisibility(View.VISIBLE);
+                    }
+                });
+
+        binding.btnBlock.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(ChatDetailActivity.this)
+                        .setTitle("Block")
+                        .setMessage("Are you sure want to block your friend? (Unblock function only takes effect when two people press unblock)")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                binding.btnBlock.setVisibility(View.GONE);
+//                                binding.btnUnblock.setVisibility(View.VISIBLE);
+                                HashMap<String, Object> obj = new HashMap<>();
+                                obj.put("isblock", "true");
+                                database.getReference().child("checkBlock").child(senderRoom)
+                                        .updateChildren(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        obj.put("isblock", "true");
+                                        database.getReference().child("checkBlock")
+                                                .child(receiverRoom)
+                                                .updateChildren(obj);
+                                    }
+
+                                });
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                    }
+                }).show();
+                return false;
+            }
+        });
+
+        binding.btnBlockHide.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(ChatDetailActivity.this)
+                        .setTitle("Block")
+                        .setMessage("Are you sure want to block your friend? (Unblock function only takes effect when two people press unblock)")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                binding.btnBlockHide.setVisibility(View.GONE);
+//                                binding.btnUnblockHide.setVisibility(View.VISIBLE);
+                                binding.txtShowblock.setText("Block Chat");
+                                HashMap<String, Object> obj = new HashMap<>();
+                                obj.put("isblockhide", "true");
+                                database.getReference().child("checkBlock").child(senderRoom)
+                                        .updateChildren(obj);
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void unused) {
+//                                        obj.put("isblockhide", "false");
+//                                        database.getReference().child("checkBlock")
+//                                                .child(receiverRoom)
+//                                                .updateChildren(obj);
+//                                    }
+//
+//                                });
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                    }
+                }).show();
+                return false;
+            }
+        });
+
+//
+//            @Override
+//            public void onClick(View view) {
+//                HashMap<String, Object> obj = new HashMap<>();
+//                obj.put("isblock", "true");
+//                database.getReference().child("checkBlock").child(senderRoom)
+//                        .updateChildren(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//                        obj.put("isblock", "true");
+//                        database.getReference().child("checkBlock")
+//                                .child(receiverRoom)
+//                                .updateChildren(obj);
+//                    }
+//
+//
+//
+//                });
+//            }
+//        });
+        binding.btnUnblock.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(ChatDetailActivity.this)
+                        .setTitle("Unblock")
+                        .setMessage("Are you sure want to Remove ? (This function takes only effect when two people press unblock at the same time)")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                binding.btnBlock.setVisibility(View.VISIBLE);
+//                                binding.btnUnblock.setVisibility(View.GONE);
+                                HashMap<String, Object> obj = new HashMap<>();
+                                obj.put("isblock", "false");
+                                database.getReference().child("checkBlock").child(senderRoom)
+                                        .updateChildren(obj);
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                    }
+                }).show();
+                return false;
+            }
+        });
+
+        binding.btnUnblockHide.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(ChatDetailActivity.this)
+                        .setTitle("Unblock")
+                        .setMessage("Are you sure want to Remove ? (This function takes only effect when two people press unblock at the same time)")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                binding.btnBlockHide.setVisibility(View.VISIBLE);
+//                                binding.btnUnblockHide.setVisibility(View.GONE);
+                                binding.txtShowblock.setText("Friend");
+                                HashMap<String, Object> obj = new HashMap<>();
+                                obj.put("isblockhide", "false");
+                                database.getReference().child("checkBlock").child(senderRoom)
+                                        .updateChildren(obj);
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                    }
+                }).show();
+                return false;
+            }
+        });
+
+//        binding.btnUnblock.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                HashMap<String, Object> obj = new HashMap<>();
+//                obj.put("isblock", "flase");
+//                database.getReference().child("checkBlock").child(senderRoom)
+//                        .updateChildren(obj);
+////                    @Override
+////                    public void onSuccess(Void unused) {
+////                        obj.put("isblock", "flase");
+////                        database.getReference().child("checkBlock")
+////                                .child(receiverRoom)
+////                                .updateChildren(obj);
+////                    }
+////                });
+//            }
+//        });
+
         binding.enterMessage.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                     binding.send.setVisibility(View.GONE);
-                binding.send2.setVisibility(View.VISIBLE);
+                binding.sendItem.setVisibility(View.VISIBLE);
 
             }
 
@@ -145,7 +386,7 @@ public class ChatDetailActivity extends AppCompatActivity {
 
                 if(charSequence.length() > 0) {
                     binding.send.setVisibility(View.VISIBLE);
-                    binding.send2.setVisibility(View.GONE);
+                    binding.sendItem.setVisibility(View.GONE);
 
                 }
             }
@@ -158,68 +399,76 @@ public class ChatDetailActivity extends AppCompatActivity {
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!binding.enterMessage.getText().toString().isEmpty()) {
-                    binding.sendItemShow.setVisibility(View.GONE);
-                    String message = binding.enterMessage.getText().toString();
-                    final MessageModel model = new MessageModel(senderId, message);
-                    model.setTimestamp(new Date().getTime());
-                    binding.enterMessage.setText("");
-                    database.getReference().child("chats")
-                            .child(senderRoom)
-                            .push()
-                            .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            database.getReference().child("chats")
-                                    .child(receiverRoom)
-                                    .push()
-                                    .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
 
+                FirebaseDatabase.getInstance().getReference().child("checkBlock")
+                        .child(receiverRoom)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                if ( snapshot.child("isblockhide").getValue().toString().equals("false") == true )
+                                {
+                                    if (!binding.enterMessage.getText().toString().isEmpty()) {
+                                        binding.sendItemShow.setVisibility(View .GONE);
+                                        String message = binding.enterMessage.getText().toString();
+                                        final MessageModel model = new MessageModel(senderId, message, "");
+                                        model.setTimestamp(new Date().getTime());
+                                        binding.enterMessage.setText("");
+                                        database.getReference().child("chats")
+                                                .child(senderRoom)
+                                                .push()
+                                                .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                database.getReference().child("chats")
+                                                        .child(receiverRoom)
+                                                        .push()
+                                                        .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
                                 }
-                            });
-                        }
-                    });
-                }else {
 
-                    Toast.makeText(ChatDetailActivity.this, "Nothing", Toast.LENGTH_SHORT).show();
+                                else {
+                                    String message = binding.enterMessage.getText().toString();
+                                    final MessageModel model = new MessageModel(senderId, message, "");
+                                    model.setTimestamp(new Date().getTime());
+                                    database.getReference().child("chats")
+                                            .child(receiverRoom)
+                                            .push()
+                                            .setValue(model);
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                binding.mainEnterMessage.setVisibility(View.VISIBLE);
+                            }
+                        });
 
-                   }
             }
         });
 
 
-//        binding.sendItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                intent.setType("image/*");
-//                startActivityForResult(intent, 25);
-//
-//            }
-//        });
+        binding.sendItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, 25);
+
+            }
+        });
 //    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        final String senderId = auth.getUid();
-//
-//        // lấy về uid của người dùng
-//        String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
-//        final String senderRoom = senderId + recieveId;
-//        final String receiverRoom = recieveId + senderId;
-//
-//        if (resultCode == Activity.RESULT_OK) {
-//            Uri sFile = data.getData();
-//            binding.sendItemShow.setImageURI(sFile);
-//            binding.sendItemShow.setVisibility(View.VISIBLE);
-//
-//
-//        }
-//    }
+
+
+
+
 
 
 //    @Override
@@ -262,6 +511,98 @@ public class ChatDetailActivity extends AppCompatActivity {
 //        }
 //    }
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        final String senderId = auth.getUid();
+
+
+        // lấy về uid của người dùng
+        String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
+        final String senderRoom = senderId + recieveId;
+        final String receiverRoom = recieveId + senderId;
+
+        if (resultCode == Activity.RESULT_OK) {
+            Uri sFile = data.getData();
+         //   binding.profileImage.setImageURI(sFile);
+
+            final StorageReference reference = storage.getReference().child("profile_pic_mess")
+                    .child(FirebaseAuth.getInstance().getUid());
+
+            reference.putFile(sFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    // thêm hàm ở đây
+
+                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            FirebaseDatabase.getInstance().getReference().child("checkBlock")
+                                    .child(receiverRoom)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.child("isblockhide").getValue().toString().equals("false") == true) {
+                                                final MessageModel model = new MessageModel(senderId, "", sFile.toString());
+                                                model.setTimestamp(new Date().getTime());
+                                                binding.enterMessage.setText("");
+                                                database.getReference().child("chats")
+                                                        .child(senderRoom)
+                                                        .push()
+                                                        .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        database.getReference().child("chats")
+                                                                .child(receiverRoom)
+                                                                .push()
+                                                                .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void unused) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                            else {
+                                                String message = binding.enterMessage.getText().toString();
+                                                final MessageModel model = new MessageModel(senderId, "", sFile.toString());
+                                                model.setTimestamp(new Date().getTime());
+                                                database.getReference().child("chats")
+                                                        .child(receiverRoom)
+                                                        .push()
+                                                        .setValue(model);
+                                            }
+                                        }
+
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            binding.mainEnterMessage.setVisibility(View.VISIBLE);
+                                        }
+                                    });
+
+                        }
+
+
+
+
+                    });   // hết hàm
+                }
+            });
+            }
+        else
+        {
+           // Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+           // startActivity(intent);
+        }
+
+    }
+
     public class SenderViewHolder extends RecyclerView.ViewHolder{
         TextView senderMsg, senderTime;
         ImageView imageView;
@@ -272,5 +613,36 @@ public class ChatDetailActivity extends AppCompatActivity {
             senderTime = itemView.findViewById(R.id.senderTime);
             imageView = itemView.findViewById(R.id.image_sent);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Offline");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
+
+        final String senderId = auth.getUid();
+
+        // lấy về uid của người dùng
+        String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
+        final String senderRoom = senderId + recieveId;
+        final String receiverRoom = recieveId + senderId;
+
+        database.getReference().child("checkSeen")
+                .child(receiverRoom).child(recieveId).setValue("Da Xem");
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Online");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
     }
 }

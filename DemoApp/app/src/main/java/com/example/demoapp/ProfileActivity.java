@@ -18,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -29,11 +31,12 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference UserRef, ChatRequestRef, ContactsRef;
     private FirebaseAuth mAuth;
 
+    FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        database = FirebaseDatabase.getInstance();
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         ChatRequestRef = FirebaseDatabase.getInstance().getReference().child("Chat Requests");
         ContactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
@@ -309,5 +312,25 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Offline");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Online");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
     }
 }

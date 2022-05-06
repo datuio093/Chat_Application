@@ -142,4 +142,24 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Offline");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Online");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
+    }
 }

@@ -24,9 +24,12 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,7 +38,8 @@ public class FindFriendsActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private RecyclerView FindFriendsRecyclerList;
     private DatabaseReference UsersRef;
-
+    FirebaseDatabase database;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +49,7 @@ public class FindFriendsActivity extends AppCompatActivity {
 
         FindFriendsRecyclerList = (RecyclerView) findViewById(R.id.find_friends_recycler_list);
         FindFriendsRecyclerList.setLayoutManager(new LinearLayoutManager(this));
-
+        database = FirebaseDatabase.getInstance();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -85,9 +89,6 @@ public class FindFriendsActivity extends AppCompatActivity {
                 binding.enterMessage.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-
-
                     }
 
                     @Override
@@ -96,6 +97,10 @@ public class FindFriendsActivity extends AppCompatActivity {
                         if(charSequence.length() > 0) {
 
                                 holder.itemView.setVisibility(View.GONE);
+                                holder.username.setVisibility(View.GONE);
+                                holder.profileImage.setVisibility(View.GONE);
+                                holder.userstatus.setVisibility(View.GONE);
+                                holder.check_contact.setVisibility(View.GONE);
                         }
                         else  holder.itemView.setVisibility(View.VISIBLE);
                     }
@@ -106,6 +111,10 @@ public class FindFriendsActivity extends AppCompatActivity {
                                 holder.username.setText(model.getUserName());
                                 holder.userstatus.setText(model.getStatus());
                                 holder.itemView.setVisibility(View.VISIBLE);
+                                holder.username.setVisibility(View.VISIBLE);
+                                holder.profileImage.setVisibility(View.VISIBLE);
+                                holder.userstatus.setVisibility(View.VISIBLE);
+                                holder.check_contact.setVisibility(View.VISIBLE);
                             }
                     }
                 });
@@ -160,4 +169,27 @@ public class FindFriendsActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Offline");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Online");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
+    }
+
+
 }

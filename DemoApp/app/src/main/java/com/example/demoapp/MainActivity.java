@@ -88,13 +88,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 //                    }
 //                });
 
-
-
-
 //        getActionBar().hide();
-
         binding.viewPager.setAdapter(new FragmentsAdapter(getSupportFragmentManager()));
-
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
 //        binding.showTablayout.setOnClickListener(new View.OnClickListener() {
@@ -170,15 +165,17 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 startActivity(intent4);
                 break;
             case R.id.logout:
+
                 HashMap<String, Object> obj = new HashMap<>();
 
-                obj.put("statusof", "Offline");
-                database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
-                        .updateChildren(obj);
+        obj.put("statusof", "Offline");
+       database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+               .updateChildren(obj);
                 mAuth.signOut();
                 Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.aboutus:
 
                 dialog.setContentView(R.layout.aboutus);
@@ -200,7 +197,37 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
 
 
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        HashMap<String, Object> obj = new HashMap<>();
+//
+//        obj.put("statusof", "Offline");
+//        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+//                .updateChildren(obj);
+//    }
 
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        HashMap<String, Object> obj = new HashMap<>();
+//        mAuth.signOut();
+//        obj.put("statusof", "Offline");
+//        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+//                .updateChildren(obj);
+//    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        HashMap<String, Object> obj = new HashMap<>();
+
+        obj.put("statusof", "Online");
+        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                .updateChildren(obj);
+    }
 
 
 }

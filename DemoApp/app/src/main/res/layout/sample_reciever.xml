@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_marginStart="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginTop="4dp"
     android:layout_marginRight="7dp"
-    android:background="@drawable/bg_receive"
+
     android:maxWidth="310dp"
     android:maxHeight="500dp"
     android:minHeight="40dp">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints"
-       android:paddingLeft="20dp"
+        android:paddingLeft="20dp"
 
+        android:background="@drawable/bg_receive"
         >
 
 
@@ -28,11 +35,11 @@
             android:id="@+id/receiverText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
             android:inputType="textLongMessage|textMultiLine"
             android:maxWidth="270dp"
             android:minWidth="50dp"
             android:text="TextView"
+            android:textColor="#000000"
             app:layout_constraintBottom_toTopOf="@+id/receiverTime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline2"
@@ -45,20 +52,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="7dp"
-            android:textColor="#000000"
             android:layout_marginBottom="3dp"
             android:text="15:56 pm"
+            android:textColor="#000000"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="130dp"
-            android:id="@+id/image_sent"
-            tools:ignore="MissingConstraints"
-            android:visibility="gone">
-        </ImageView>
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -67,9 +68,30 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="16dp" />
 
-
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/image_sent"
+            android:layout_width="200dp"
+            android:layout_height="130dp"
+
+            tools:ignore="MissingConstraints">
+
+        </ImageView>
+    </RelativeLayout>
+<!--    <TextView-->
+<!--        android:id="@+id/check_seen_reciever"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="TextView"-->
+<!--        -->
+<!--        tools:layout_editor_absoluteX="20dp"-->
+<!--        tools:layout_editor_absoluteY="36dp" />-->
+
+
+
+
+</LinearLayout>
 
 

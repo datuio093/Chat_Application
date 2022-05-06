@@ -4,18 +4,20 @@ public class MessageModel {
     String uId, message, messageId,imagemess;
     Long timestamp;
 
-    public MessageModel(String uId, String message, String imagemess, Long timestamp) {
+    public MessageModel(String uId, String message, Long timestamp ,  String imagemess) {
         this.uId = uId;
         this.message = message;
         this.timestamp = timestamp;
         this.imagemess = imagemess;
     }
 
-    public MessageModel(String uId, String message ) {
+    public MessageModel(String uId, String message ,String imagemess) {
         this.uId = uId;
         this.message = message;
+        this.imagemess = imagemess;
 
     }
+
 
     public MessageModel() {
 
