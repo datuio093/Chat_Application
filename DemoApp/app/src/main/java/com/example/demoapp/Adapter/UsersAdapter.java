@@ -58,7 +58,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
 
         FirebaseDatabase.getInstance().getReference().child("chats")
-                .child(FirebaseAuth.getInstance().getUid() + users.getUserId())
+                .child(users.getUserId() + FirebaseAuth.getInstance().getUid()  )
                 .orderByChild("timestamp")
                 .limitToLast(1)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
