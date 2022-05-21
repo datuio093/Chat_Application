@@ -13,22 +13,32 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.example.demoapp.ChatDetailActivity;
 import com.example.demoapp.Models.MessageModel;
 import com.example.demoapp.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ChatAdapter extends RecyclerView.Adapter {
 
     ArrayList<MessageModel> messageModels;
     Context context;
     String recId;
+    FirebaseDatabase database;
+
+
+
 
     int SENDER_VIEW_TYPE = 1;
     int RECEIVER_VIEW_TYPE = 2;
@@ -75,6 +85,9 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MessageModel messageModel = messageModels.get(position);
 
+        Intent intent = new Intent();
+        String recieveId = intent.getStringExtra("userID");
+
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -85,8 +98,13 @@ public class ChatAdapter extends RecyclerView.Adapter {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                String senderRoom = FirebaseAuth.getInstance().getUid() + recId;
+                                String senderRoom = recId +FirebaseAuth.getInstance().getUid() ;
+                                String receiverRoom = FirebaseAuth.getInstance().getUid() + recId  ;
                                 database.getReference().child("chats").child(senderRoom)
+                                        .child(messageModel.getMessageId())
+                                        .setValue(null);
+
+                                database.getReference().child("chats").child(receiverRoom)
                                         .child(messageModel.getMessageId())
                                         .setValue(null);
                             }
@@ -104,16 +122,66 @@ public class ChatAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
 
-                Uri uri = Uri.parse("https://www.youtube.com/watch?v=TU-yDCgpbZw");
-
             }
         });
+                String senderRoom = recId +FirebaseAuth.getInstance().getUid() ;
+                String receiverRoom = FirebaseAuth.getInstance().getUid() + recId  ;
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
+        HashMap<String, Object> obj = new HashMap<>();
+        obj.put("isSeen", "true");
+        database.getReference().child("Checkseen").child(receiverRoom)
+                .updateChildren(obj);
+
+
+
+        FirebaseDatabase.getInstance().getReference().child("Checkseen")
+                .child(senderRoom)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Date date = new Date(messageModel.getTimestamp());
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
+                        String strDate = simpleDateFormat.format(date);
+                //        ((SenderViewHolder)holder).senderTime.setText(strDate.toString());
+                        try {
+                            if (snapshot.child("isSeen").getValue().toString().equals("true") && position == messageModels.size() - 1 ) {
+                                ((SenderViewHolder) holder).checkSeen.setText("Seen at " + strDate.toString());
+                            } else
+                                ((SenderViewHolder) holder).checkSeen.setVisibility(View.GONE);
+
+
+                        }catch(Exception e){ }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
 
 
         if(holder.getClass() == SenderViewHolder.class)
         {
+
+
+
+
+
             ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
-            if(!messageModel.getImageMess().isEmpty()  ){
+
+//            if(messageModel.getImageMess().isEmpty() && messageModel.getMessage().isEmpty())
+//            {
+//                ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
+//                ((SenderViewHolder) holder).senderTime.setVisibility(View.GONE);
+//                ((SenderViewHolder) holder).imageView.setVisibility(View.GONE);
+//                ((SenderViewHolder)holder).checkSeen.setText(messageModel.getCheckSeen());
+//            }
+
+            if(!messageModel.getImageMess().isEmpty()   ){
                 ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
                 ((SenderViewHolder) holder).senderTime.setVisibility(View.GONE);
                 Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((SenderViewHolder) holder).imageView);
@@ -137,16 +205,18 @@ public class ChatAdapter extends RecyclerView.Adapter {
             Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((ReceiverViewHolder) holder).imageView);
             }
             else
+
                 ((ReceiverViewHolder) holder).imageView.setVisibility(View.GONE);
             Date date = new Date(messageModel.getTimestamp());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
             String strDate = simpleDateFormat.format(date);
             ((ReceiverViewHolder)holder).receiverTime.setText(strDate.toString());
             String strDate1 = simpleDateFormat.format(date);
-//            ((ReceiverViewHolder)holder).checkSeenR.setText("Đã Xem");
+
 
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -161,22 +231,23 @@ public class ChatAdapter extends RecyclerView.Adapter {
             super(itemView);
             receiverMsg = itemView.findViewById(R.id.receiverText);
             receiverTime = itemView.findViewById(R.id.receiverTime);
-   //         checkSeenR = itemView.findViewById(R.id.check_seen_reciever);
+        //   checkSeenR = itemView.findViewById(R.id.name_nav);
             imageView = itemView.findViewById(R.id.image_sent);
         }
 
     }
 
     public class SenderViewHolder extends RecyclerView.ViewHolder{
-        TextView senderMsg, senderTime, checkSeenS;
+        TextView senderMsg, senderTime, checkSeen;
         ImageView imageView;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
 
+
             senderMsg = itemView.findViewById(R.id.senderText);
             senderTime = itemView.findViewById(R.id.senderTime);
             imageView = itemView.findViewById(R.id.image_sent);
-     //       checkSeenS = itemView.findViewById(R.id.check_seen_sender);
+            checkSeen = itemView.findViewById(R.id.check_seen_sender);
         }
     }
 }

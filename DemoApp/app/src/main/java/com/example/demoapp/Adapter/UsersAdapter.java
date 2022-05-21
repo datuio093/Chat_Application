@@ -67,8 +67,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                         if(snapshot.hasChildren()){
                             for(DataSnapshot snapshot1:snapshot.getChildren())
                             {
-
+                                try {
                                     holder.lastMessage.setText(snapshot1.child("message").getValue().toString());
+                                } catch (Exception e )  {      holder.lastMessage.setText(" "); }
 
                             }
                         }
@@ -110,6 +111,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatDetailActivity.class);
+                Intent intent2 = new Intent(context, ChatAdapter.class);
+                intent2.putExtra("userID",users.getUserId());
+
+
                 intent.putExtra("userID",users.getUserId());
                 intent.putExtra("profilePic",users.getProfilePic());
                 intent.putExtra("userName",users.getUserName());

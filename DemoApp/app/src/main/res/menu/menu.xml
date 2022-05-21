@@ -7,6 +7,9 @@
     <item android:id="@+id/settings"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="Settings" />
+            <item android:id="@+id/changepassword"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="Change Password" />
         </menu>
     </item>
 
@@ -25,6 +28,11 @@
 
             android:icon="@drawable/ic_baseline_login_24"
             android:title="Logout" />
+
+        <item android:id="@+id/delete"
+
+            android:icon="@drawable/ic_baseline_clear_24"
+            android:title="Delete" />
 
     </menu>
 

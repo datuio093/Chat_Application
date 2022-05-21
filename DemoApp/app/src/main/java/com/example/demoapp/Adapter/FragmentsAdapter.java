@@ -22,7 +22,6 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
         switch (position)
         {
                 case 0: return new ChatsFragment();
-
                 case 1: return new ContactsFragment();
                 default: return new ChatsFragment();
         }

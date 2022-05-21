@@ -1,5 +1,7 @@
 package com.example.demoapp;
 
+import static org.webrtc.VideoFrameDrawer.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.ims.ImsMmTelManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,11 +28,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.demoapp.Adapter.ChatAdapter;
 import com.example.demoapp.Adapter.FragmentsAdapter;
 import com.example.demoapp.Models.Users;
 import com.example.demoapp.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -44,6 +52,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     FirebaseAuth mAuth;
     Dialog dialog;
     FirebaseDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +64,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         setContentView(binding.getRoot());
         dialog = new Dialog(this);
         mAuth = FirebaseAuth.getInstance();
+
 
 
 
@@ -164,6 +174,19 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 Intent intent4 = new Intent(MainActivity.this,FindFriendsActivity.class);
                 startActivity(intent4);
                 break;
+            case R.id.delete:
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                user.delete()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(MainActivity.this, "User is Delete", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
             case R.id.logout:
 
                 HashMap<String, Object> obj = new HashMap<>();
@@ -189,6 +212,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         startActivity(new Intent(Intent.ACTION_VIEW,uri));
                     }
                 });
+            case R.id.changepassword:
+
+                Intent intent1 = new Intent(MainActivity.this, ChangePasswordActivity.class);
+                startActivity(intent1);
+
 
 
         }

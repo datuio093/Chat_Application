@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
+
             android:layout_marginBottom="3dp"
             android:inputType="textLongMessage|textMultiLine"
             android:maxWidth="270dp"
@@ -59,24 +59,19 @@
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="340dp"
-    android:layout_marginTop="50dp"
-    android:layout_marginBottom="20dp"
-    android:visibility="gone">
-
+    android:layout_marginLeft="250dp"
+    android:layout_marginTop="42dp"
+    android:layout_marginBottom="20dp">
     <TextView
         android:id="@+id/check_seen_sender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-
-        >
+        android:layout_marginTop="5dp">
 
         <ImageView
             android:id="@+id/image_sent"
@@ -84,8 +79,8 @@
             android:layout_height="130dp"
             android:layout_marginLeft="197dp"
             tools:ignore="MissingConstraints">
-
         </ImageView>
+
     </LinearLayout>
 
 

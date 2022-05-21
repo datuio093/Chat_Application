@@ -20,6 +20,7 @@ public class Begin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityBeginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.bounce);

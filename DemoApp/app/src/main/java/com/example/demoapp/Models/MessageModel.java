@@ -1,7 +1,7 @@
 package com.example.demoapp.Models;
 
 public class MessageModel {
-    String uId, message, messageId,imagemess;
+    String uId, message, messageId,imagemess,checkSeen;
     Long timestamp;
 
     public MessageModel(String uId, String message, Long timestamp ,  String imagemess) {
@@ -15,8 +15,16 @@ public class MessageModel {
         this.uId = uId;
         this.message = message;
         this.imagemess = imagemess;
-
     }
+    public MessageModel(String uId, String message ,String imagemess, String checkseen) {
+        this.uId = uId;
+        this.message = message;
+        this.imagemess = imagemess;
+        this.checkSeen = checkseen;
+    }
+
+
+
 
 
     public MessageModel() {
@@ -30,7 +38,6 @@ public class MessageModel {
     public void setuId(String uId) {
         this.uId = uId;
     }
-
 
     public String getImageMess() {
         return imagemess;
@@ -62,5 +69,15 @@ public class MessageModel {
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
+    }
+
+
+
+    public String getCheckSeen() {
+        return checkSeen;
+    }
+
+    public void setCheckSeen(String checkSeen) {
+        this.checkSeen = checkSeen;
     }
 }

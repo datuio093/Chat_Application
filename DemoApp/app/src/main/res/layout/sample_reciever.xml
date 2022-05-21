@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-
+        android:id="@+id/total_rs"
         android:background="@drawable/bg_receive"
         >
 

@@ -70,6 +70,13 @@ public class SignInActivity extends AppCompatActivity {
                  startActivity(intent12);
              }
          });
+        binding.txtClickResetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignInActivity.this, ForgetPassWord.class);
+                startActivity(intent);
+            }
+        });
 
         binding.btnSignin.setOnClickListener(new View.OnClickListener(){
 
