@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DemoApp">
         <activity
+            android:name=".UpStory"
+            android:exported="false" />
+        <activity
             android:name=".ChangePasswordActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ForgetPassWord"
             android:exported="false" />

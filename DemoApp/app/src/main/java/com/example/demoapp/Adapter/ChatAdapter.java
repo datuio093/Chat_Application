@@ -4,12 +4,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -118,12 +122,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
                 String senderRoom = recId +FirebaseAuth.getInstance().getUid() ;
                 String receiverRoom = FirebaseAuth.getInstance().getUid() + recId  ;
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -168,7 +167,21 @@ public class ChatAdapter extends RecyclerView.Adapter {
         {
 
 
+            ((SenderViewHolder) holder).senderMsg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                    try {
+                        Uri uri = Uri.parse(((SenderViewHolder) holder).senderMsg.getText().toString());
+                        context.startActivity(new Intent(Intent.ACTION_VIEW,uri));
+                    }
+                    catch (Exception e){
+
+                    };
+
+
+                }
+            });
 
 
             ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
@@ -198,6 +211,22 @@ public class ChatAdapter extends RecyclerView.Adapter {
         }
         else
         {
+            ((ReceiverViewHolder) holder).receiverMsg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    try {
+                        Uri uri = Uri.parse(((ReceiverViewHolder) holder).receiverMsg.getText().toString());
+                        context.startActivity(new Intent(Intent.ACTION_VIEW,uri));
+                    }
+                    catch (Exception e){
+
+                    };
+
+
+                }
+            });
+
             ((ReceiverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
             if(!messageModel.getImageMess().isEmpty() ){
                 ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);

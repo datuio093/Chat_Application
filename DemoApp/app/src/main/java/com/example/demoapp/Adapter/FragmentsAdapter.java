@@ -10,6 +10,7 @@ import com.example.demoapp.Fragments.CallsFragment;
 import com.example.demoapp.Fragments.ChatsFragment;
 import com.example.demoapp.Fragments.ContactsFragment;
 import com.example.demoapp.Fragments.StatusFragment;
+import com.example.demoapp.Fragments.StoryFragment;
 
 public class FragmentsAdapter extends FragmentPagerAdapter {
     public FragmentsAdapter (@NonNull FragmentManager fm) {
@@ -23,13 +24,14 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
         {
                 case 0: return new ChatsFragment();
                 case 1: return new ContactsFragment();
+                case 2: return new StoryFragment();
                 default: return new ChatsFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
@@ -45,6 +47,10 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
         if(position == 1)
         {
             title = "FRIENDS";
+        }
+        if(position == 2)
+        {
+            title = "STORY";
         }
         return title;
     }

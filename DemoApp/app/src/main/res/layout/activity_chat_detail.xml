@@ -16,16 +16,16 @@
         android:layout_height="match_parent">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/linear"
-        android:layout_below="@id/toolbar"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/main_chat" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/linear"
+            android:layout_below="@id/toolbar"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/main_chat" />
 
 
     <RelativeLayout
@@ -135,248 +135,265 @@
     </RelativeLayout>
 
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/main_toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
-
-        <ImageView
-            android:id="@+id/show"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="4dp"
-            app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
-
-        <ImageView
-            android:id="@+id/hide"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:srcCompat="@drawable/appbar_eye_hide" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/show_infor"
-            android:background="@color/black">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:padding="5dp"
-                android:src="@drawable/avatar3"
-                app:civ_border_color="#020202"
-                app:civ_border_width="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/userName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="Username"
-                android:textSize="18sp"
-                android:textStyle="bold"
-
-                app:layout_constraintStart_toEndOf="@+id/profile_image"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/main_toolbar"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme">
 
             <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/call" />
-            <TextView
-                android:id="@+id/txt_showblock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
-                android:layout_marginStart="5dp"
+                android:id="@+id/backArrow"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="4dp"
 
-                app:layout_constraintStart_toEndOf="@+id/profile_image"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="Friend" />
+                app:srcCompat="@drawable/leftarrowwhite" />
 
             <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/videocall" />
+                android:id="@+id/show"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="4dp"
+                app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
+
+            <ImageView
+                android:id="@+id/hide"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/appbar_eye_hide" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/show_infor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/avatar3"
+                    app:civ_border_color="#020202"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Username"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+                    app:layout_constraintStart_toEndOf="@+id/profile_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/tv_call"
+                    android:layout_width="23dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/call" />
+
+                <TextView
+                    android:id="@+id/txt_showblock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="27dp"
+                    android:text="Friend"
+                    app:layout_constraintStart_toEndOf="@+id/profile_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_showstatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="4dp"
+
+                    app:layout_constraintStart_toEndOf="@+id/userName"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/videocall" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+            <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--            android:id="@+id/show_infor"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="match_parent"-->
+            <!--            android:layout_marginRight="6dp"-->
+            <!--            android:background="@color/black">-->
 
-        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-        <!--            android:id="@+id/show_infor"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_marginRight="6dp"-->
-        <!--            android:background="@color/black">-->
-
-        <!--            <RelativeLayout-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content">-->
-
-
-        <!--                <de.hdodenhof.circleimageview.CircleImageView-->
-        <!--                    android:id="@+id/profile_image"-->
-        <!--                    android:layout_width="45dp"-->
-        <!--                    android:layout_height="45dp"-->
-
-        <!--                    android:layout_marginLeft="5dp"-->
-
-        <!--                    android:src="@drawable/avatar3"-->
-        <!--                    app:civ_border_color="#020202"-->
-        <!--                    app:civ_border_width="2dp"-->
-
-        <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-        <!--                <TextView-->
-
-        <!--                    android:id="@+id/userName"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_marginStart="20dp"-->
-        <!--                    android:layout_marginTop="15dp"-->
-        <!--                    android:layout_marginEnd="20dp"-->
-        <!--                    android:layout_marginBottom="20dp"-->
-        <!--                    android:layout_toRightOf="@+id/profile_image"-->
-        <!--                    android:text="Username"-->
-        <!--                    android:textSize="15sp"-->
-        <!--                    android:textStyle="bold"-->
-        <!--                    app:layout_constraintStart_toEndOf="@+id/profile_image" />-->
+            <!--            <RelativeLayout-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content">-->
 
 
-        <!--                <ImageView-->
-        <!--                    android:id="@+id/btn_add"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
+            <!--                <de.hdodenhof.circleimageview.CircleImageView-->
+            <!--                    android:id="@+id/profile_image"-->
+            <!--                    android:layout_width="45dp"-->
+            <!--                    android:layout_height="45dp"-->
 
-        <!--                    android:layout_marginTop="10dp"-->
-        <!--                    android:layout_marginEnd="15dp"-->
-        <!--                    android:layout_marginRight="15dp"-->
-        <!--                    android:layout_toRightOf="@+id/userName"-->
-        <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                    app:layout_constraintTop_toTopOf="parent"-->
-        <!--                    app:srcCompat="@drawable/ic_baseline_add_24" />-->
+            <!--                    android:layout_marginLeft="5dp"-->
 
-        <!--                <ImageView-->
-        <!--                    android:id="@+id/btn_unadd"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:src="@drawable/avatar3"-->
+            <!--                    app:civ_border_color="#020202"-->
+            <!--                    app:civ_border_width="2dp"-->
 
-        <!--                    android:layout_marginTop="10dp"-->
-        <!--                    android:layout_marginEnd="15dp"-->
-        <!--                    android:layout_marginRight="15dp"-->
-        <!--                    android:layout_toRightOf="@+id/userName"-->
-        <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                    app:layout_constraintTop_toTopOf="parent"-->
-        <!--                    app:srcCompat="@drawable/ic_baseline_clear_24" />-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
+            <!--                <TextView-->
 
-        <!--                <RelativeLayout-->
-        <!--                    android:id="@+id/total_btn_block"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_toRightOf="@+id/userName">-->
+            <!--                    android:id="@+id/userName"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="20dp"-->
+            <!--                    android:layout_marginTop="15dp"-->
+            <!--                    android:layout_marginEnd="20dp"-->
+            <!--                    android:layout_marginBottom="20dp"-->
+            <!--                    android:layout_toRightOf="@+id/profile_image"-->
+            <!--                    android:text="Username"-->
+            <!--                    android:textSize="15sp"-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    app:layout_constraintStart_toEndOf="@+id/profile_image" />-->
 
 
-        <!--                    <ImageView-->
-        <!--                        android:id="@+id/btn_block"-->
-        <!--                        android:layout_width="wrap_content"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:layout_marginStart="30dp"-->
-        <!--                        android:layout_marginTop="10dp"-->
-        <!--                        android:layout_marginEnd="15dp"-->
-        <!--                        android:layout_marginRight="15dp"-->
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/btn_add"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
 
-        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--                        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                        app:layout_constraintTop_toTopOf="parent"-->
-        <!--                        app:srcCompat="@drawable/ic_baseline_lock_24" />-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_marginEnd="15dp"-->
+            <!--                    android:layout_marginRight="15dp"-->
+            <!--                    android:layout_toRightOf="@+id/userName"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent"-->
+            <!--                    app:srcCompat="@drawable/ic_baseline_add_24" />-->
 
-        <!--                    <ImageView-->
-        <!--                        android:id="@+id/btn_unblock"-->
-        <!--                        android:layout_width="wrap_content"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:layout_marginStart="50dp"-->
-        <!--                        android:layout_marginTop="10dp"-->
-        <!--                        android:layout_marginEnd="15dp"-->
-        <!--                        android:layout_marginRight="15dp"-->
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/btn_unadd"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
 
-        <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--                        app:layout_constraintEnd_toStartOf="@+id/btn_block"-->
-        <!--                        app:layout_constraintTop_toTopOf="parent"-->
-        <!--                        app:srcCompat="@drawable/ic_baseline_lock_open_24" />-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_marginEnd="15dp"-->
+            <!--                    android:layout_marginRight="15dp"-->
+            <!--                    android:layout_toRightOf="@+id/userName"-->
+            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                    app:layout_constraintTop_toTopOf="parent"-->
+            <!--                    app:srcCompat="@drawable/ic_baseline_clear_24" />-->
 
 
-        <!--                    <ImageView-->
-        <!--                        android:id="@+id/btn_unblock_hide"-->
-        <!--                        android:layout_width="wrap_content"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:layout_marginStart="100dp"-->
-        <!--                        android:layout_marginTop="10dp"-->
-        <!--                        android:layout_marginEnd="15dp"-->
-        <!--                        android:layout_marginRight="15dp"-->
+            <!--                <RelativeLayout-->
+            <!--                    android:id="@+id/total_btn_block"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_toRightOf="@+id/userName">-->
 
-        <!--                        app:layout_constraintEnd_toStartOf="@+id/btn_unblock"-->
-        <!--                        app:layout_constraintTop_toTopOf="parent"-->
-        <!--                        app:srcCompat="@drawable/ic_baseline_comment_24" />-->
 
-        <!--                    <ImageView-->
-        <!--                        android:id="@+id/btn_block_hide"-->
-        <!--                        android:layout_width="wrap_content"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:layout_marginStart="75dp"-->
-        <!--                        android:layout_marginTop="10dp"-->
-        <!--                        android:layout_marginEnd="15dp"-->
-        <!--                        android:layout_marginRight="15dp"-->
+            <!--                    <ImageView-->
+            <!--                        android:id="@+id/btn_block"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginStart="30dp"-->
+            <!--                        android:layout_marginTop="10dp"-->
+            <!--                        android:layout_marginEnd="15dp"-->
+            <!--                        android:layout_marginRight="15dp"-->
 
-        <!--                        app:layout_constraintEnd_toStartOf="@+id/btn_unblock"-->
-        <!--                        app:layout_constraintTop_toTopOf="parent"-->
-        <!--                        app:srcCompat="@drawable/ic_baseline_comments_disabled_24" />-->
-        <!--                </RelativeLayout>-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent"-->
+            <!--                        app:srcCompat="@drawable/ic_baseline_lock_24" />-->
 
-        <!--                <TextView-->
-        <!--                    android:id="@+id/txt_showblock"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_marginTop="37dp"-->
-        <!--                    android:layout_marginStart="5dp"-->
-        <!--                    android:text="Friend" />-->
-        <!--            </RelativeLayout>-->
+            <!--                    <ImageView-->
+            <!--                        android:id="@+id/btn_unblock"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginStart="50dp"-->
+            <!--                        android:layout_marginTop="10dp"-->
+            <!--                        android:layout_marginEnd="15dp"-->
+            <!--                        android:layout_marginRight="15dp"-->
 
-        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                        app:layout_constraintEnd_toStartOf="@+id/btn_block"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent"-->
+            <!--                        app:srcCompat="@drawable/ic_baseline_lock_open_24" />-->
 
-    </androidx.appcompat.widget.Toolbar>
+
+            <!--                    <ImageView-->
+            <!--                        android:id="@+id/btn_unblock_hide"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginStart="100dp"-->
+            <!--                        android:layout_marginTop="10dp"-->
+            <!--                        android:layout_marginEnd="15dp"-->
+            <!--                        android:layout_marginRight="15dp"-->
+
+            <!--                        app:layout_constraintEnd_toStartOf="@+id/btn_unblock"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent"-->
+            <!--                        app:srcCompat="@drawable/ic_baseline_comment_24" />-->
+
+            <!--                    <ImageView-->
+            <!--                        android:id="@+id/btn_block_hide"-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginStart="75dp"-->
+            <!--                        android:layout_marginTop="10dp"-->
+            <!--                        android:layout_marginEnd="15dp"-->
+            <!--                        android:layout_marginRight="15dp"-->
+
+            <!--                        app:layout_constraintEnd_toStartOf="@+id/btn_unblock"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent"-->
+            <!--                        app:srcCompat="@drawable/ic_baseline_comments_disabled_24" />-->
+            <!--                </RelativeLayout>-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/txt_showblock"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginTop="37dp"-->
+            <!--                    android:layout_marginStart="5dp"-->
+            <!--                    android:text="Friend" />-->
+            <!--            </RelativeLayout>-->
+
+            <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        </androidx.appcompat.widget.Toolbar>
 
     </RelativeLayout>
     <com.google.android.material.navigation.NavigationView

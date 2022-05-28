@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/total_o"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+
+        android:padding="5dp"
+        android:src="@drawable/avatar3"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
+
+    <ImageButton
+        android:id="@+id/online_offline"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_above="@+id/profile_image"
+        android:layout_alignRight="@+id/profile_image"
+        android:layout_alignBottom="@+id/profile_image"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="0dp"
+
+        android:background="@drawable/check_online">
+
+    </ImageButton>
+
+
+    <TextView
+        android:id="@+id/userNameList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/profile_image"
+        android:paddingTop="15dp"
+        android:paddingBottom="5dp"
+        android:text="Rohan kumar"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/text_story"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_image"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="..hmmm"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+        <ImageView
+            android:id="@+id/image_story"
+            android:layout_below="@+id/text_story"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+
+
+    <TextView
+        android:id="@+id/txt_show_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image_story"
+        android:layout_weight="1"
+        android:text="Like 12" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_show_like"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_favorite_24"
+            android:layout_weight="1"
+            android:text="LIKE" />
+
+
+        <ImageButton
+            android:id="@+id/btn_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_comment_24"
+            android:text="Nhắn Tin" />
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

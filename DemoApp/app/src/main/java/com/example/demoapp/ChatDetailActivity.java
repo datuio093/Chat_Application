@@ -62,12 +62,15 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         super.onCreate(savedInstanceState);
         binding = ActivityChatDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         dialog = new Dialog(this);
       binding.send.setVisibility(View.GONE);
         binding.show.setVisibility(View.GONE);
-//        getSupportActionBar().hide();
+        getSupportActionBar().hide();
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         final String senderId = auth.getUid();
@@ -90,13 +93,13 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         binding.userName.setText(userName);   // set userName = với thông tin người dùng
         Picasso.get().load(profilePic).placeholder(R.drawable.avatar).into(binding.profileImage);  // load image
 
-//        binding.backArrow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(ChatDetailActivity.this, MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });   // nút back
+        binding.backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChatDetailActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });   // nút back
 
         final ArrayList<MessageModel> messageModels = new ArrayList<>();  // tạo mảng MessageModel
         final ChatAdapter chatAdapter = new ChatAdapter(messageModels, this, recieveId); // biến chatadapter()
@@ -116,6 +119,8 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         obj.put("isSeen", "true");
         database.getReference().child("Checkseen").child(senderRoom)
                 .updateChildren(obj);
+
+
 
 
 // check seen error
@@ -221,6 +226,32 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
             }
         });
+        FirebaseDatabase.getInstance().getReference().child("Status")
+                .child(recieveId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        try {
+                            if (snapshot.child("users").getValue().toString().equals("Ngu")) {
+                             binding.txtShowstatus.setText("(Đang Ngủ)");
+                            }
+                            else if (snapshot.child("users").getValue().toString().equals("LamViec")) {
+                                binding.txtShowstatus.setText("(Bận)");
+                            }
+                                else
+                                binding.txtShowstatus.setText("(Rảnh)");
+
+
+                        }catch(Exception e){ }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        binding.mainEnterMessage.setVisibility(View.VISIBLE);
+                    }
+                });
+
+
         FirebaseDatabase.getInstance().getReference().child("checkBlock")
                     .child(senderRoom)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -472,6 +503,18 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
             }
         });
+
+        binding.tvCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChatDetailActivity.this, VideoCallOutGoing.class);
+                intent.putExtra("userID", recieveId);
+                intent.putExtra("userName", userName);
+                intent.putExtra("profilePic", profilePic);
+                startActivity(intent);
+            }
+        });
+
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -831,9 +874,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                 return false;
 
 
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 

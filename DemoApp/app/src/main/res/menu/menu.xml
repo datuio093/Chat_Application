@@ -35,7 +35,32 @@
             android:title="Delete" />
 
     </menu>
+    </item>
 
+    <item android:title="Status" >
+        <menu>
+
+            <item android:id="@+id/ngu"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="Ngủ" />
+            <item android:id="@+id/ranh"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="Rảnh" />
+            <item android:id="@+id/lamviec"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="Làm Việc" />
+        </menu>
+    </item>
+
+    <item android:title="Story" >
+        <menu>
+
+            <item android:id="@+id/story"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="Tạo Tin">
+
+            </item>
+        </menu>
     </item>
 
 </menu>

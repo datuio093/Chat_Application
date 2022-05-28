@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     Dialog dialog;
     FirebaseDatabase database;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
 
+
+
+        final String senderId = mAuth.getUid();
 
         HashMap<String, Object> obj = new HashMap<>();
 
@@ -216,6 +220,29 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
                 Intent intent1 = new Intent(MainActivity.this, ChangePasswordActivity.class);
                 startActivity(intent1);
+                return false;
+            case R.id.ngu:
+                HashMap<String, Object> obj1 = new HashMap<>();
+                obj1.put("users", "Ngu");
+                database.getReference().child("Status").child(mAuth.getUid())
+                        .updateChildren(obj1);
+                return false;
+            case R.id.lamviec:
+                HashMap<String, Object> obj2 = new HashMap<>();
+                obj2.put("users", "LamViec");
+                database.getReference().child("Status").child(mAuth.getUid())
+                        .updateChildren(obj2);
+                return false;
+            case R.id.ranh:
+                HashMap<String, Object> obj3 = new HashMap<>();
+                obj3.put("users", "Ranh");
+                database.getReference().child("Status").child(mAuth.getUid())
+                        .updateChildren(obj3);
+                return false;
+            case R.id.story:
+                Intent intent3 = new Intent(MainActivity.this, UpStory.class);
+                startActivity(intent3);
+                return false;
 
 
 

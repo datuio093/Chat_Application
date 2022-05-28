@@ -42,7 +42,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         holder.name.setText(users.getUserName());
 
      holder.check_contact.setVisibility(View.GONE);
-
 //        if(users.getStatusof().equals("Online") ) {
 //            holder.check_contact.setVisibility(View.VISIBLE);
 //        }
