@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.demoapp.Adapter.ChatAdapter;
 import com.example.demoapp.Adapter.StoryAdapter;
 import com.example.demoapp.Adapter.UsersAdapter;
 import com.example.demoapp.Models.Users;
@@ -19,7 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class StoryFragment extends Fragment {
 
@@ -33,12 +36,14 @@ public class StoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         binding = FragmentChatsBinding.inflate(inflater,container,false);
         database = FirebaseDatabase.getInstance();
 
         StoryAdapter adapter = new StoryAdapter(list, getContext());
         binding.chatRecyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+
        binding.chatRecyclerView.setLayoutManager(layoutManager);
 
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
@@ -48,9 +53,9 @@ public class StoryFragment extends Fragment {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Users users = dataSnapshot.getValue(Users.class);
                     users.setUserId(dataSnapshot.getKey());
-                    if(!users.getUserId().equals(FirebaseAuth.getInstance().getUid())  ){
-                        list.add(users);
-                    }
+
+                    list.add(users);
+
                 }
                 adapter.notifyDataSetChanged();
             }

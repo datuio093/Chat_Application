@@ -107,7 +107,9 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         binding.chatRecyclerView.setAdapter(chatAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd (true);
         binding.chatRecyclerView.setLayoutManager(linearLayoutManager);
+
 
         binding.hide.setVisibility(View.VISIBLE);
         binding.show.setVisibility(View.GONE);

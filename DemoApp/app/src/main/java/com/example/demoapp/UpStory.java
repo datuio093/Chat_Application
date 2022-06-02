@@ -40,6 +40,7 @@ public class UpStory extends AppCompatActivity {
         binding.btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 HashMap<String, Object> obj1 = new HashMap<>();
                 obj1.put("text", binding.txtStory.getText().toString());
                 database.getReference().child("Story").child(mAuth.getUid())
@@ -49,6 +50,16 @@ public class UpStory extends AppCompatActivity {
                 obj2.put("like", 0 );
                 database.getReference().child("Story").child(mAuth.getUid())
                         .updateChildren(obj2);
+
+                HashMap<String, Object> obj3 = new HashMap<>();
+                obj3.put("said", 0 );
+                database.getReference().child("Story").child(mAuth.getUid())
+                        .updateChildren(obj3);
+
+                HashMap<String, Object> obj4 = new HashMap<>();
+                obj4.put("laugh", 0 );
+                database.getReference().child("Story").child(mAuth.getUid())
+                        .updateChildren(obj4);
             }
         });
 

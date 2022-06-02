@@ -42,6 +42,7 @@ public class ChatsFragment extends Fragment {
         UsersAdapter adapter = new UsersAdapter(list, getContext());
         binding.chatRecyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+
         binding.chatRecyclerView.setLayoutManager(layoutManager);
 
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {

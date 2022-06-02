@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DemoApp">
         <activity
+            android:parentActivityName=".MainActivity"
             android:name=".UpStory"
             android:exported="false" />
         <activity
