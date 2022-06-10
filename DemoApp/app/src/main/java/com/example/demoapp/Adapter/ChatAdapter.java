@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.demoapp.ChatDetailActivity;
 import com.example.demoapp.Models.MessageModel;
 import com.example.demoapp.R;
+import com.example.demoapp.VideoCallComing;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -137,30 +139,41 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
 
 
-        FirebaseDatabase.getInstance().getReference().child("Checkseen")
-                .child(senderRoom)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Date date = new Date(messageModel.getTimestamp());
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
-                        String strDate = simpleDateFormat.format(date);
-                //        ((SenderViewHolder)holder).senderTime.setText(strDate.toString());
-                        try {
-                            if (snapshot.child("isSeen").getValue().toString().equals("true") && position == messageModels.size() - 1 ) {
-                                ((SenderViewHolder) holder).checkSeen.setText("Seen at " + strDate.toString());
-                            } else
-                                ((SenderViewHolder) holder).checkSeen.setVisibility(View.GONE);
 
-
-                        }catch(Exception e){ }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+        Handler mHandler = new Handler();
+        Runnable my_runnable = new Runnable() {
+            @Override
+            public void run() {
+                // your code here
+            }
+        };
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseDatabase.getInstance().getReference().child("Checkseen")
+                        .child(senderRoom)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Date date = new Date(messageModel.getTimestamp());
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
+                                String strDate = simpleDateFormat.format(date);
+                                //        ((SenderViewHolder)holder).senderTime.setText(strDate.toString());
+                                try {
+                                    if (snapshot.child("isSeen").getValue().toString().equals("true") && position == messageModels.size() - 1 ) {
+                                        ((SenderViewHolder) holder).checkSeen.setText("Seen at " + strDate.toString());
+                                        ((SenderViewHolder) holder).checkSeen.setVisibility(View.VISIBLE);
+                                    } else
+                                        ((SenderViewHolder) holder).checkSeen.setVisibility(View.GONE);
+                                }catch(Exception e){ }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                mHandler.postDelayed(this, 500);
+            }
+        }, 500);
 
 
 

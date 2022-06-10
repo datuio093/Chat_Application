@@ -2,6 +2,7 @@ package com.example.demoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -57,12 +58,29 @@ public class VideoCallComing extends AppCompatActivity {
                 try {
                         JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
                      .setServerURL(new URL("https://meet.jit.si"))
-                     .setRoom("test123")
+                     .setRoom(receiverRoom + senderRoom)
                      .setWelcomePageEnabled(false)
                      .build();
                      JitsiMeetActivity.launch(VideoCallComing.this, options);
                      finish();
                 }catch (Exception e){}
+            }
+        });
+
+        binding.btnDecline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String recieveId = getIntent().getStringExtra("userID");
+                final String senderId = auth.getUid();
+                database = FirebaseDatabase.getInstance();
+
+                HashMap<String, Object> obj = new HashMap<>();
+                obj.put(senderId , "false");
+                database.getReference().child("checkCall").child("outComeRoom").child(recieveId)
+                        .updateChildren(obj);
+
+                Intent intent = new Intent(VideoCallComing.this ,ChatDetailActivity.class );
+                startActivity(intent);
             }
         });
 

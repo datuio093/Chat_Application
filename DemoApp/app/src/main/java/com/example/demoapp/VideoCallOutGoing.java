@@ -75,6 +75,8 @@ public class VideoCallOutGoing extends AppCompatActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                final String senderRoom = senderId + recieveId;
+                final String receiverRoom = recieveId + senderId;
                 FirebaseDatabase.getInstance().getReference().child("checkCall")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -85,7 +87,7 @@ public class VideoCallOutGoing extends AppCompatActivity {
                                         Toast.makeText(VideoCallOutGoing.this, "zzzz", Toast.LENGTH_SHORT).show();
                                         JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
                                                 .setServerURL(new URL("https://meet.jit.si"))
-                                                .setRoom("test123")
+                                                .setRoom(senderRoom+receiverRoom)
                                                 .setWelcomePageEnabled(false)
                                                 .build();
                                         JitsiMeetActivity.launch(VideoCallOutGoing.this, options);

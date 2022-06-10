@@ -122,10 +122,10 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         final String senderRoom = senderId + recieveId;
         final String receiverRoom = recieveId + senderId;
 
-        HashMap<String, Object> obj = new HashMap<>();
-        obj.put("isSeen", "true");
-        database.getReference().child("Checkseen").child(senderRoom)
-                .updateChildren(obj);
+//        HashMap<String, Object> obj = new HashMap<>();
+//        obj.put("isSeen", "true");
+//        database.getReference().child("Checkseen").child(senderRoom)
+//                .updateChildren(obj);
 
         Handler mHandler = new Handler();
         Runnable my_runnable = new Runnable() {
@@ -157,6 +157,8 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
+
+
                 mHandler.postDelayed(this, 1000);
             }
         }, 1000);
