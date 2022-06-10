@@ -1,8 +1,11 @@
 package com.example.demoapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,13 +13,17 @@ import android.widget.Toast;
 import com.example.demoapp.databinding.ActivityVideoCallOutGoingBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
 
 import java.net.URL;
+import java.util.HashMap;
 
 public class VideoCallOutGoing extends AppCompatActivity {
     ImageView imageView;
@@ -49,23 +56,59 @@ public class VideoCallOutGoing extends AppCompatActivity {
         binding.callusername.setText(userName);
         Picasso.get().load(profilePic).placeholder(R.drawable.avatar).into(binding.profileimagecall);
 
-            try {
-                JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
-                        .setServerURL(new URL("https://meet.jit.si"))
-                        .setRoom("test123")
-                        .setWelcomePageEnabled(false)
-                        .build();
-                JitsiMeetActivity.launch(VideoCallOutGoing.this, options);
-                finish();
-            }
-            catch (Exception e) {
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+        HashMap<String, Object> obj = new HashMap<>();
+        obj.put(recieveId, "true");
+        database.getReference().child("checkCall").child("inComeRoom").child(senderId)
+                .updateChildren(obj);
 
-            JitsiMeetConferenceOptions options
-                    = new JitsiMeetConferenceOptions.Builder()
-                    .setRoom("test123")
-                    .build();
-            JitsiMeetActivity.launch(this,options);
+
+
+
+
+        Handler mHandler = new Handler();
+        Runnable my_runnable = new Runnable() {
+            @Override
+            public void run() {
+                // your code here
+            }
+        };
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseDatabase.getInstance().getReference().child("checkCall")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                try {
+                                    if(snapshot.child("outComeRoom").child(senderId).child(recieveId).getValue().toString().equals("true") )
+                                    {
+                                        Toast.makeText(VideoCallOutGoing.this, "zzzz", Toast.LENGTH_SHORT).show();
+                                        JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
+                                                .setServerURL(new URL("https://meet.jit.si"))
+                                                .setRoom("test123")
+                                                .setWelcomePageEnabled(false)
+                                                .build();
+                                        JitsiMeetActivity.launch(VideoCallOutGoing.this, options);
+                                        finish();
+                                        mHandler.removeCallbacksAndMessages(null);
+                                    }
+                                }catch(Exception e){ }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                mHandler.postDelayed(this, 1000);
+            }
+        }, 1000);
+
+
+
+
+//            JitsiMeetConferenceOptions options
+//                    = new JitsiMeetConferenceOptions.Builder()
+//                    .setRoom("test123")
+//                    .build();
+//            JitsiMeetActivity.launch(this,options);
     }
 }

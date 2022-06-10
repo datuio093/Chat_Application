@@ -55,17 +55,13 @@ public class StoryFragment extends Fragment {
                     users.setUserId(dataSnapshot.getKey());
 
                     list.add(users);
-
                 }
                 adapter.notifyDataSetChanged();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
         return binding.getRoot();
     }
 }

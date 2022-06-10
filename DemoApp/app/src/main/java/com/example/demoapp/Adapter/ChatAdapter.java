@@ -70,6 +70,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
         }
         else
         {
+
             View view = LayoutInflater.from(context).inflate(R.layout.sample_reciever,parent,false);
             return new ReceiverViewHolder(view);
         }
@@ -87,6 +88,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
         MessageModel messageModel = messageModels.get(position);
 
         Intent intent = new Intent();
@@ -165,8 +167,14 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
         if(holder.getClass() == SenderViewHolder.class)
         {
-
-
+//
+//            ((SenderViewHolder) holder).imageView.setOnClickListener(new() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//
+//                    return false;
+//                }
+//            });
             ((SenderViewHolder) holder).senderMsg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -174,6 +182,9 @@ public class ChatAdapter extends RecyclerView.Adapter {
                     try {
                         Uri uri = Uri.parse(((SenderViewHolder) holder).senderMsg.getText().toString());
                         context.startActivity(new Intent(Intent.ACTION_VIEW,uri));
+//                        database.getReference().child("chats").child(senderRoom)
+//                                .child(  messageModel.getMessageId()    ).child("message")
+//                                .setValue("tao la thang gui");
                     }
                     catch (Exception e){
 
@@ -182,6 +193,8 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
                 }
             });
+
+
 
 
             ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
@@ -211,6 +224,22 @@ public class ChatAdapter extends RecyclerView.Adapter {
         }
         else
         {
+//            ((ReceiverViewHolder) holder).haha.setVisibility(View.GONE);
+//            ((ReceiverViewHolder) holder).like.setVisibility(View.GONE);
+//            ((ReceiverViewHolder) holder).said.setVisibility(View.GONE);
+//            ((ReceiverViewHolder) holder).itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//                    database.getReference().child("chats").child(senderRoom)
+//                            .child(messageModel.getMessageId()).child("message")
+//                            .setValue("tao la thang nhan");
+//
+//                    ((ReceiverViewHolder) holder).haha.setVisibility(View.VISIBLE);
+//                    ((ReceiverViewHolder) holder).like.setVisibility(View.VISIBLE);
+//                    ((ReceiverViewHolder) holder).said.setVisibility(View.VISIBLE);
+//                    return false;
+//                }
+//            });
             ((ReceiverViewHolder) holder).receiverMsg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -254,7 +283,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     public class ReceiverViewHolder extends RecyclerView.ViewHolder {
         TextView receiverMsg, receiverTime,checkSeenR;
-        ImageView imageView;
+        ImageView imageView,haha,like,said;
 
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -262,6 +291,11 @@ public class ChatAdapter extends RecyclerView.Adapter {
             receiverTime = itemView.findViewById(R.id.receiverTime);
         //   checkSeenR = itemView.findViewById(R.id.name_nav);
             imageView = itemView.findViewById(R.id.image_sent);
+
+//            haha = itemView.findViewById(R.id.btn_like);
+//            like = itemView.findViewById(R.id.likee);
+//            said = itemView.findViewById(R.id.saidd);
+
         }
 
     }

@@ -60,6 +60,12 @@ public class UpStory extends AppCompatActivity {
                 obj4.put("laugh", 0 );
                 database.getReference().child("Story").child(mAuth.getUid())
                         .updateChildren(obj4);
+
+
+
+                database.getReference().child("FeelStory").child(mAuth.getUid()).removeValue();
+
+
             }
         });
 

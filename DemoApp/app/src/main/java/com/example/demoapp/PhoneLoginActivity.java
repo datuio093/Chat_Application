@@ -49,12 +49,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
 
-//        SendVerificationCodeButton = (Button) findViewById(R.id.send_ver_code_button);
-//        VerifyButton = (Button) findViewById(R.id.verify_button);
-//
-//        InputPhoneNumber = (EditText) findViewById(R.id.phone_number_input);
-//        Password = (EditText) findViewById(R.id.password_input);
-//        InputVerificationCode = (EditText) findViewById(R.id.verification_code_input);
+
         loadingBar = new ProgressDialog(this);
 
         binding.sendVerCodeButton.setOnClickListener(new View.OnClickListener() {

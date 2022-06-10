@@ -2,6 +2,8 @@ package com.example.demoapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,12 +168,18 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                 });
 
 
-        FirebaseDatabase.getInstance().getReference().child("Story")
-                .child(users.getUserId())
 
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseDatabase.getInstance().getReference().child("Story")
+                        .child(users.getUserId())
+
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 try {
                                     mAuth = FirebaseAuth.getInstance();
 
@@ -180,16 +188,18 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                                     holder.like.setText(snapshot.child("like").getValue().toString());
                                     holder.textStory.setText(snapshot.child("text").getValue().toString());
 
-                                 //   Picasso.get().load(snapshot.child("profilePic").getValue().toString()).into(holder.image2);
-
+                                    Picasso.get().load(snapshot.child("profilePic").getValue().toString()).into(holder.image2);
 
                                 } catch (Exception e )  {      holder.textStory.setText(" "); }
-                    }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                mHandler.postDelayed(this, 1000);
+            }
+        }, 3000);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
 
 
         holder.btlike.setOnClickListener(new View.OnClickListener() {
@@ -254,7 +264,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                                     holder.btlike.setVisibility(View.GONE);
                                     holder.likered.setVisibility(View.VISIBLE);
 
-
                                 } catch (Exception e )  {      holder.textStory.setText(" "); }
                             }
 
@@ -263,7 +272,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
                             }
                         });
-
             }
         });
 
@@ -324,19 +332,16 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 //                                    obj3.put("like" , "false" );
 //                                    database.getReference().child("Story").child("RoomFeel").child(users.getUserId()).child(mAuth.getUid())
 //                                            .updateChildren(obj3);
-
                                     holder.btlike.setVisibility(View.VISIBLE);
                                     holder.likered.setVisibility(View.GONE);
 
                                 } catch (Exception e )  {      holder.textStory.setText(" "); }
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
                             }
                         });
-
             }
         });
 
@@ -422,34 +427,25 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 database = FirebaseDatabase.getInstance();
                                 try {
-
-
                                     mAuth = FirebaseAuth.getInstance();
                                     HashMap<String, Object> obj3 = new HashMap<>();
                                     obj3.put("laugh" , "flase" );
                                     database.getReference().child("FeelStory").child(users.getUserId()).child(mAuth.getUid())
                                             .updateChildren(obj3);
-
                                     holder.likered.setVisibility(View.GONE);
                                     holder.btlike.setVisibility(View.VISIBLE);
-
                                     // hide again
                                     holder.btlike.setEnabled(true);
                                     holder.btsaid.setEnabled(true);
-
-
                                 } catch (Exception e )  {      holder.textStory.setText(" "); }
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
                             }
                         });
 
                 FirebaseDatabase.getInstance().getReference().child("Story")
                         .child(users.getUserId())
-
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -457,7 +453,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                                 try {
                                     String a =  snapshot.child("laugh").getValue().toString();
                                     int b =    Integer.parseInt(a);
-                                    b = b + 1;
+                                    b = b - 1;
                                     HashMap<String, Object> obj2 = new HashMap<>();
                                     obj2.put("laugh", b );
                                     database.getReference().child("Story").child(users.getUserId())
@@ -470,18 +466,12 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 //                                            .updateChildren(obj3);
                                     holder.btlaugh.setVisibility(View.VISIBLE);
                                     holder.btlaughred.setVisibility(View.GONE);
-
-
-
                                     //set laugh = true to block if user click again
 //                                    mAuth = FirebaseAuth.getInstance();
 //                                    HashMap<String, Object> obj3 = new HashMap<>();
 //                                    obj3.put("laugh" , "false" );
 //                                    database.getReference().child("Story").child("RoomFeel").child(users.getUserId()).child(mAuth.getUid())
 //                                            .updateChildren(obj3);
-
-
-
                                 } catch (Exception e )  {      holder.textStory.setText(" "); }
                             }
 
@@ -548,7 +538,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                                     database.getReference().child("Story").child(users.getUserId())
                                             .updateChildren(obj2);
 
-
 //                                    mAuth = FirebaseAuth.getInstance();
 //                                    HashMap<String, Object> obj3 = new HashMap<>();
 //                                    obj3.put("said" , "true" );
@@ -557,11 +546,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
                                     holder.btsaid.setVisibility(View.GONE);
                                     holder.btsaidred.setVisibility(View.VISIBLE);
-
-
-
-
-
 
 
                                 } catch (Exception e )  {      holder.textStory.setText(" "); }
@@ -629,20 +613,13 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
                                     obj2.put("said", b );
                                     database.getReference().child("Story").child(users.getUserId())
                                             .updateChildren(obj2);
-
 //                                    mAuth = FirebaseAuth.getInstance();
 //                                    HashMap<String, Object> obj3 = new HashMap<>();
 //                                    obj3.put("said", "false" );
 //                                    database.getReference().child("Story").child("RoomFeel").child(users.getUserId() + mAuth.getUid())
 //                                            .updateChildren(obj3);
-
                                     holder.btsaid.setVisibility(View.VISIBLE);
                                     holder.btsaidred.setVisibility(View.GONE);
-
-
-
-
-
 
                                 } catch (Exception e )  {      holder.textStory.setText(" "); }
                             }
@@ -652,7 +629,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
                             }
                         });
-
             }
         });
 
@@ -663,7 +639,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
                 Intent intent2 = new Intent(context, ChatAdapter.class);
                 intent2.putExtra("userID",users.getUserId());
-
                 intent.putExtra("userID",users.getUserId());
                 intent.putExtra("profilePic",users.getProfilePic());
                 intent.putExtra("userName",users.getUserName());

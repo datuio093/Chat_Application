@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/total_o"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/bg_story"
-    android:layout_marginBottom="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -57,25 +58,26 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
         android:text="..hmmm"
         android:textSize="16sp"
         android:textStyle="normal" />
 
 
+    <ImageView
+        android:id="@+id/image_story"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_story"
+        android:background="@drawable/bg_story">
 
-        <ImageView
-            android:id="@+id/image_story"
-            android:layout_below="@+id/text_story"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </ImageView>
+    </ImageView>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/total_text"
-
+        android:textColor="@color/black"
         android:layout_below="@+id/total_btn"
         android:orientation="horizontal">
         <TextView
@@ -84,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:gravity="center"
-
+            android:textColor="@color/black"
             android:text="0"
             android:layout_weight="1" />
 
@@ -93,7 +95,7 @@
             android:layout_width="30dp"
             android:gravity="center"
             android:layout_gravity="left"
-
+            android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="0"
@@ -105,40 +107,44 @@
             android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:textColor="@color/black"
             android:text="0"
 
           />
     </LinearLayout>
 
 
-
     <LinearLayout
+        android:id="@+id/total_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/total_btn"
-        android:layout_below="@+id/text_story"
-
-        android:orientation="horizontal">
+        android:layout_below="@+id/image_story"
+        android:orientation="horizontal"
+        android:textColor="@color/black">
 
         <ImageView
             android:id="@+id/btn_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginStart="5dp"
-            android:src="@drawable/ic_baseline_favorite_border_24"
             android:layout_weight="1"
-            android:text="LIKE" />
+
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+            android:src="@drawable/ic_baseline_favorite_border_24"
+
+            android:text="LIKE"
+            android:textColor="@color/black"
+            android:theme="@style/AppTheme" />
 
         <ImageView
             android:id="@+id/btn_like_red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:src="@drawable/ic_baseline_favorite_24_red"
             android:layout_weight="1"
+            android:src="@drawable/ic_baseline_favorite_24_red"
             android:text="LIKE" />
-
 
 
         <ImageView
@@ -146,17 +152,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:src="@drawable/ic_baseline_sentiment_very_satisfied_24"
             android:layout_weight="1"
-            android:text="LIKE" />
+            android:hardwareAccelerated="false"
+
+            android:largeHeap="true"
+            android:src="@drawable/ic_baseline_sentiment_very_satisfied_24"
+            android:text="LIKE"
+            android:theme="@style/AppTheme" />
 
         <ImageView
             android:id="@+id/btn_verylaugh_red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:src="@drawable/ic_baseline_sentiment_very_satisfied_24_red"
             android:layout_weight="1"
+            android:src="@drawable/ic_baseline_sentiment_very_satisfied_24_red"
             android:text="LIKE" />
 
         <ImageView
@@ -164,17 +174,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:src="@drawable/ic_baseline_sentiment_very_dissatisfied_24"
             android:layout_weight="1"
-            android:text="LIKE" />
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
+
+            android:src="@drawable/ic_baseline_sentiment_very_dissatisfied_24"
+            android:text="LIKE"
+            android:theme="@style/AppTheme" />
 
         <ImageView
             android:id="@+id/btn_verysaid_red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:src="@drawable/ic_baseline_sentiment_very_dissatisfied_24_red"
             android:layout_weight="1"
+            android:src="@drawable/ic_baseline_sentiment_very_dissatisfied_24_red"
             android:text="LIKE" />
 
 
@@ -183,12 +197,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:hardwareAccelerated="false"
+
+            android:largeHeap="true"
             android:src="@drawable/ic_baseline_chat_bubble_outline_24"
-            android:text="Nhắn Tin" />
+            android:text="Nhắn Tin"
+            android:theme="@style/AppTheme" />
     </LinearLayout>
-
-
-
 
 
 </RelativeLayout>

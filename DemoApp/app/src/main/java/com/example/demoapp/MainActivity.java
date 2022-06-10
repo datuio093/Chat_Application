@@ -78,91 +78,20 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
                 .updateChildren(obj);
 
-//        database.getReference().child("Contacts").child(FirebaseAuth.getInstance().getUid())
-//                .updateChildren(obj);
 
-
-//        database = FirebaseDatabase.getInstance();
-//
-//        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
-//                .addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        Users users = snapshot.getValue(Users.class);
-//                        Picasso.get()
-//                                .load(users.getProfilePic())
-//                                .placeholder(R.drawable.avatar)
-//                                .into(imageView);
-//
-//                        name.setText(users.getUserName());
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-
-//        getActionBar().hide();
         binding.viewPager.setAdapter(new FragmentsAdapter(getSupportFragmentManager()));
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
-//        binding.showTablayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                binding.lnTablayout.setVisibility(View.VISIBLE);
-//                binding.showTablayout.setVisibility(View.GONE);
-//                binding.showTablayout1.setVisibility(View.VISIBLE);
-//            }
-//        });
-//        binding.showTablayout1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                binding.lnTablayout.setVisibility(View.GONE);
-//                binding.showTablayout.setVisibility(View.VISIBLE);
-//                binding.showTablayout1.setVisibility(View.GONE);
-//            }
-//        });
 
-//        DrawerLayout drawerLayout;
-//        Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar_top);
-//        drawerLayout =(DrawerLayout) findViewById(R.id.draw_bar);
-//        getSupportActionBar().setTitle("mAIN");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar, R.string.hello_blank_fragment,R.string.hello_blank_fragment);
-//        actionBarDrawerToggle.syncState();
+
 
 
         NavigationView navigationView = findViewById(R.id.nav_layout);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu,menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId())
-//        {
-//            case R.id.settings:
-//                Intent intent2 = new Intent(MainActivity.this,SettingsActivity.class);
-//                startActivity(intent2);
-//                break;
-//
-//            case R.id.logout:
-//                mAuth.signOut();
-//                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-//                startActivity(intent);
-//                break;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -179,8 +108,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 startActivity(intent4);
                 break;
             case R.id.delete:
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+              //  database.getReference().child("Users").child(mAuth.getUid()).removeValue();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 user.delete()
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
