@@ -11,6 +11,7 @@ import com.example.demoapp.Fragments.ChatsFragment;
 import com.example.demoapp.Fragments.ContactsFragment;
 import com.example.demoapp.Fragments.StatusFragment;
 import com.example.demoapp.Fragments.StoryFragment;
+import com.example.demoapp.R;
 
 public class FragmentsAdapter extends FragmentPagerAdapter {
     public FragmentsAdapter (@NonNull FragmentManager fm) {
@@ -33,7 +34,11 @@ public class FragmentsAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 3;
     }
-
+    private int[] imageResId = {
+            R.drawable.add,
+            R.drawable.add,
+            R.drawable.add
+    };
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VideoCallOutGoing"
-    android:background="@color/white">
+    android:background="@drawable/w1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,8 +14,10 @@
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="vertical">
         <de.hdodenhof.circleimageview.CircleImageView
+
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:id="@+id/profileimagecall"
@@ -33,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="User"
-                android:textColor="@color/black"
+                android:textColor="#FFFFFF"
                 android:textSize="40sp"
                 android:id="@+id/callusername"
                 android:textStyle="bold"/>
@@ -41,7 +43,7 @@
         </LinearLayout>
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="40dp"
             android:id="@+id/imageView5"
 
             />
@@ -50,13 +52,16 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Incoming Video Call ..."
-            android:textColor="@color/black"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"/>
-        <Button
-            android:id="@+id/deline_btn"
+        <ImageView
+            android:id="@+id/btn_appect"
+
+            android:src="@drawable/failed"
+            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Decline"/>
+            android:text="APPECT"/>
     </LinearLayout>
 </LinearLayout>

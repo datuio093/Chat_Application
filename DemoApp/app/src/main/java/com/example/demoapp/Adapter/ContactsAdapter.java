@@ -42,42 +42,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         holder.name.setText(users.getUserName());
 
      holder.check_contact.setVisibility(View.GONE);
-//        if(users.getStatusof().equals("Online") ) {
-//            holder.check_contact.setVisibility(View.VISIBLE);
-//        }
-//        else
-//            holder.check_contact.setVisibility(View.GONE);
 
-//        FirebaseDatabase.getInstance().getReference().child("Groups")
-//                .child(FirebaseAuth.getInstance().getUid() + users.getUserId())
-//                .orderByChild("timestamp")
-//                .limitToLast(1)
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        if(snapshot.hasChildren()){
-//                            for(DataSnapshot snapshot1:snapshot.getChildren())
-//                            {
-//                                holder.lastMessage.setText(snapshot1.child("message").getValue().toString());
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, ChatDetailActivity.class);
-//                intent.putExtra("groupName", contacts.getGroupName());
-//                intent.putExtra("groupPic", contacts.getGroupPic());
-//                context.startActivity(intent);
-//            }
-//        });
     }
 
     @Override

@@ -62,9 +62,9 @@ public class ProfileActivity extends AppCompatActivity {
         UserRef.child(receiverUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if((snapshot.exists()) && (snapshot.hasChild("image")))
+                if((snapshot.exists()) && (snapshot.hasChild("profilePic")))
                 {
-                    String userImage = snapshot.child("image").getValue().toString();
+                    String userImage = snapshot.child("profilePic").getValue().toString();
                     String userName = snapshot.child("userName").getValue().toString();
                     String userStatus = snapshot.child("status").getValue().toString();
 

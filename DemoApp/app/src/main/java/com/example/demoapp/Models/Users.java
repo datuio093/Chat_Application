@@ -1,12 +1,20 @@
 package com.example.demoapp.Models;
 
 public class Users {
-    String profilePic, userName, mail, password, userId, lastMessage, status, Statusof;
+    String profilePic, userName, mail, password, userId, lastMessage, status, Statusof, checkStory;
     public Users() {
 
     }
 
-    public Users(String profilePic, String userName, String mail, String password, String userId, String lastMessage, String status, String Statusof) {
+    public String getCheckStory() {
+        return checkStory;
+    }
+
+    public void setCheckStory(String checkStory) {
+        this.checkStory = checkStory;
+    }
+
+    public Users(String profilePic, String userName, String mail, String password, String userId, String lastMessage, String status, String Statusof, String checkStory) {
         this.profilePic = profilePic;
         this.userName = userName;
         this.mail = mail;
@@ -15,6 +23,7 @@ public class Users {
         this.lastMessage = lastMessage;
         this.status = status;
         this.Statusof = Statusof;
+        this.checkStory = checkStory;
     }
 
     public Users(String userName, String mail, String password) {

@@ -148,8 +148,8 @@
 
             <ImageView
                 android:id="@+id/backArrow"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="4dp"
@@ -204,12 +204,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/tv_call"
+                    android:id="@+id/tv_call_audio"
                     android:layout_width="23dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_call"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/call" />
 
@@ -234,7 +234,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/imageView5"
+                    android:id="@+id/tv_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"

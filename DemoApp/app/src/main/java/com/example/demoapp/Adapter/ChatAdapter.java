@@ -28,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 
@@ -223,6 +224,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
             if(!messageModel.getImageMess().isEmpty()   ){
                 ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
                 ((SenderViewHolder) holder).senderTime.setVisibility(View.GONE);
+
                 Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((SenderViewHolder) holder).imageView);
             }
             else
@@ -273,7 +275,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
             if(!messageModel.getImageMess().isEmpty() ){
                 ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);
                 ((ReceiverViewHolder) holder).receiverTime.setVisibility(View.GONE);
-            Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((ReceiverViewHolder) holder).imageView);
+            Picasso.get().load(messageModel.getImageMess().toString()).placeholder(R.drawable.avatar).into(((ReceiverViewHolder) holder).imageView);
             }
             else
 

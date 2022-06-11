@@ -6,14 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity"
     android:background="@drawable/w1">
+
     <ImageView
-        android:id="@+id/visit_profile_image1"
+        android:id="@+id/image_card"
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-10dp"
         android:src="@drawable/anhbia" />
+
+    <ImageView
+        android:id="@+id/change_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_baseline_camera_alt_24" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="120dp"
@@ -23,8 +32,7 @@
         android:layout_marginTop="150dp"
 
         android:src="@drawable/avatar_test"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp" />
+        />
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"

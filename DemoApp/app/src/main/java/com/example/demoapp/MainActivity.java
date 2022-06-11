@@ -81,8 +81,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         binding.viewPager.setAdapter(new FragmentsAdapter(getSupportFragmentManager()));
         binding.tabLayout.setupWithViewPager(binding.viewPager);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        binding.tabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_chat_bubble_outline_24_123);
+        binding.tabLayout.getTabAt(1).setIcon(R.drawable.add);
+        binding.tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_auto_stories_24);
 
 
 

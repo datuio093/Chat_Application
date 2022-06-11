@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VideoCallComing"
-    android:background="@color/white">
+    android:background="@drawable/w1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,13 +14,17 @@
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="vertical">
+
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="match_parent"
+
             android:layout_height="120dp"
             android:id="@+id/profileimagecall"
             android:src="@drawable/avatar"
-            app:civ_border_color="#FF000000"
+            app:civ_border_color="#000000"
             app:civ_border_width="2dp"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="User"
-                android:textColor="@color/black"
+                android:textColor="#FFFFFF"
                 android:textSize="40sp"
                 android:id="@+id/callusername"
                 android:textStyle="bold"/>
@@ -41,7 +45,7 @@
         </LinearLayout>
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="40dp"
             android:id="@+id/imageView5"
 
             />
@@ -50,18 +54,33 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Incoming Video Call ..."
-            android:textColor="@color/black"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"/>
-        <Button
-            android:id="@+id/btn_decline"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Decline"/>
-        <Button
-            android:id="@+id/btn_appect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="APPECT"/>
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:id="@+id/btn_decline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/accept"
+                android:gravity="left"
+                android:text="Decline"/>
+
+            <ImageView
+                android:id="@+id/btn_appect"
+                android:src="@drawable/failed"
+                android:layout_marginStart="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="APPECT"/>
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

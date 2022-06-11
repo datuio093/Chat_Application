@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.demoapp.databinding.ActivityVideoCallComingBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
@@ -38,11 +39,13 @@ public class VideoCallComing extends AppCompatActivity {
         String userName = getIntent().getStringExtra("userName");
         String profilePic = getIntent().getStringExtra("profilePic");
 
+        binding.callusername.setText(userName);
+        Picasso.get().load(profilePic).placeholder(R.drawable.avatar).into(binding.profileimagecall);
+
         final String senderRoom = senderId + recieveId;
         final String receiverRoom = recieveId + senderId;
 
-// outcomming : check có đồng ý ??
-// incomming : check có cuộc gọi hay không ??
+
 
         binding.btnAppect.setOnClickListener(new View.OnClickListener() {  /// đồng ý trả lời
             @Override

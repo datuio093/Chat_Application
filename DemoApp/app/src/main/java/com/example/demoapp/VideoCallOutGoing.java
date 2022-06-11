@@ -3,6 +3,7 @@ package com.example.demoapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -75,6 +76,20 @@ public class VideoCallOutGoing extends AppCompatActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                binding.btnAppect.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        HashMap<String, Object> obj = new HashMap<>();
+                        obj.put(recieveId, "false");
+                        database.getReference().child("checkCall").child("inComeRoom").child(senderId)
+                                .updateChildren(obj);
+                        mHandler.removeCallbacksAndMessages(null);
+                        Intent intent = new Intent(VideoCallOutGoing.this , MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
                 final String senderRoom = senderId + recieveId;
                 final String receiverRoom = recieveId + senderId;
                 FirebaseDatabase.getInstance().getReference().child("checkCall")
@@ -84,7 +99,6 @@ public class VideoCallOutGoing extends AppCompatActivity {
                                 try {
                                     if(snapshot.child("outComeRoom").child(senderId).child(recieveId).getValue().toString().equals("true") )
                                     {
-                                        Toast.makeText(VideoCallOutGoing.this, "zzzz", Toast.LENGTH_SHORT).show();
                                         JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
                                                 .setServerURL(new URL("https://meet.jit.si"))
                                                 .setRoom(senderRoom+receiverRoom)
@@ -107,10 +121,5 @@ public class VideoCallOutGoing extends AppCompatActivity {
 
 
 
-//            JitsiMeetConferenceOptions options
-//                    = new JitsiMeetConferenceOptions.Builder()
-//                    .setRoom("test123")
-//                    .build();
-//            JitsiMeetActivity.launch(this,options);
     }
 }

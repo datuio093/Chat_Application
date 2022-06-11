@@ -7,6 +7,7 @@
     android:background="@drawable/w1"
     tools:context=".ProfileActivity">
 
+
     <ImageView
         android:id="@+id/visit_profile_image1"
         android:layout_width="match_parent"
@@ -15,6 +16,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-10dp"
         android:src="@drawable/anhbia" />
+
+
+
+
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/visit_profile_image"

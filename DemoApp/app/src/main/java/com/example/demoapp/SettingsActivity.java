@@ -88,6 +88,8 @@ public class SettingsActivity extends AppCompatActivity {
                                 .load(users.getProfilePic())
                                 .placeholder(R.drawable.avatar)
                                 .into(binding.profileImage);
+
+
                         binding.etStatus.setText(users.getStatus());
                         binding.txtUsername.setText(users.getUserName());
                     }
@@ -109,38 +111,70 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivityForResult(intent, 25);
             }
         });
+
+        binding.changeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, 24);
+            }
+        });
     }
 
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode == 25) {
+    if (resultCode == Activity.RESULT_OK) {
+        Uri sFile = data.getData();
+        binding.profileImage.setImageURI(sFile);
 
-        if (resultCode == Activity.RESULT_OK) {
-            Uri sFile = data.getData();
-            binding.profileImage.setImageURI(sFile);
+        final StorageReference reference = storage.getReference().child("profile_pic")
+                .child(FirebaseAuth.getInstance().getUid());
+        reference.putFile(sFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                                .child("profilePic").setValue(uri.toString());
+                    }
+                });
+            }
+        });
+    } else {
+        Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+}       if(requestCode == 24) {
+            if (resultCode == Activity.RESULT_OK) {
+                Uri sFile = data.getData();
+                binding.profileImage.setImageURI(sFile);
 
-            final StorageReference reference = storage.getReference().child("profile_pic")
-                    .child(FirebaseAuth.getInstance().getUid());
-            reference.putFile(sFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-            database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
-                    .child("profilePic").setValue(sFile.toString());
-                        }
-                    });
-                }
-            });
+                final StorageReference reference = storage.getReference().child("profile_pic_card")
+                        .child(FirebaseAuth.getInstance().getUid());
+                reference.putFile(sFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid())
+                                        .child("profilePicCard").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            } else {
+                Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+                startActivity(intent);
         }
-        else
-        {
-            Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
-            startActivity(intent);
-        }
-
+    }
     }
 
     @Override

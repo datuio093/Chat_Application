@@ -46,6 +46,11 @@ public class UpStory extends AppCompatActivity {
                 database.getReference().child("Story").child(mAuth.getUid())
                         .updateChildren(obj1);
 
+                HashMap<String, Object> obj5 = new HashMap<>();
+                obj5.put("checkStory", "true");
+                database.getReference().child("Users").child(mAuth.getUid())
+                        .updateChildren(obj5);
+
                 HashMap<String, Object> obj2 = new HashMap<>();
                 obj2.put("like", 0 );
                 database.getReference().child("Story").child(mAuth.getUid())
@@ -99,7 +104,7 @@ public class UpStory extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             database.getReference().child("Story").child(FirebaseAuth.getInstance().getUid())
-                                    .child("profilePic").setValue(sFile.toString());
+                                    .child("profilePic").setValue(uri.toString());
                         }
                     });
                 }

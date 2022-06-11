@@ -15,47 +15,31 @@
 <LinearLayout
     android:layout_width="match_parent"
 
-    android:layout_height="wrap_content"
-    android:background="@drawable/w1"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
-
-<!--    <com.google.android.material.appbar.AppBarLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">-->
-<!--          <androidx.appcompat.widget.Toolbar-->
-<!--              android:layout_width="match_parent"-->
-<!--              android:layout_height="?attr/actionBarSize"-->
-<!--            android:id="@+id/toolbar_top"-->
-<!--              android:background="@color/chatbackground"-->
-<!--              app:popupTheme="@style/ThemeOverlay.AppCompat.Light">-->
-<!--          </androidx.appcompat.widget.Toolbar>-->
-<!--    </com.google.android.material.appbar.AppBarLayout>-->
-
-
-
-
     <LinearLayout
         android:id="@+id/ln_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_add"
-        android:layout_margin="20dp"
+        android:layout_gravity="bottom"
+
+
         >
 
         <com.google.android.material.tabs.TabLayout
 
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_height="60dp"
+
+
             android:background="@drawable/tab_layout"
-            android:elevation="12dp"
+
             app:tabGravity="fill"
 
-            app:tabMaxWidth="0dp"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="#000000"
+            app:tabSelectedTextColor="#EA80FC"
             app:tabTextColor="#000000"
 
             />
@@ -65,17 +49,19 @@
         android:id="@+id/ln_iewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/main_chat"
-        android:layout_margin="5dp">
+
+        android:background="@drawable/main_chat">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/main_chat"
 
             />
     </LinearLayout>
+
 
 
 
@@ -91,23 +77,21 @@
 
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_layout"
         android:layout_width="250dp"
         android:layout_height="match_parent"
-        app:headerLayout="@layout/layout_header_nav"
-        android:background="@drawable/nav_shape"
-        android:id="@+id/nav_layout"
-
-        app:subheaderColor="#000000"
         android:layout_gravity="start"
-        app:menu="@menu/menu"
+        android:background="@drawable/nav_shape"
+
+        app:headerLayout="@layout/layout_header_nav"
         app:itemTextColor="#000000"
-        >
+        app:menu="@menu/menu"
+        app:subheaderColor="#000000">
 
     </com.google.android.material.navigation.NavigationView>
 
 
-
-<!--    <androidx.appcompat.widget.Toolbar-->
+    <!--    <androidx.appcompat.widget.Toolbar-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content">-->
 

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.demoapp.Adapter.ChatAdapter;
+import com.example.demoapp.Adapter.FragmentsAdapter;
 import com.example.demoapp.Models.MessageModel;
 import com.example.demoapp.databinding.ActivityChatDetailBinding;
 import com.google.android.gms.common.api.ApiException;
@@ -81,10 +82,13 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         final String senderId = auth.getUid();
         storage = FirebaseStorage.getInstance();
 
+
 //        binding.totalBtnBlock.setVisibility(View.GONE);
 //        binding.btnUnadd.setVisibility(View.GONE);
 //        binding.btnUnadd.setVisibility(View.GONE);
 //        binding.btnAdd.setVisibility(View.GONE);
+
+
 
         NavigationView navigationView = findViewById(R.id.nav_layout);
         navigationView.setNavigationItemSelectedListener(ChatDetailActivity.this);
@@ -458,7 +462,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                                                     database.getReference().child("Checkseen").child(receiverRoom)
                                                             .updateChildren(obj);
 
-                                                    final MessageModel model = new MessageModel(senderId, "", sFile.toString());
+                                                    final MessageModel model = new MessageModel(senderId, "", uri.toString());
                                                     model.setTimestamp(new Date().getTime());
                                                     binding.enterMessage.setText("");
                                                     database.getReference().child("chats")
@@ -483,7 +487,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                                                     database.getReference().child("Checkseen").child(receiverRoom)
                                                             .updateChildren(obj);
                                                     String message = binding.enterMessage.getText().toString();
-                                                    final MessageModel model = new MessageModel(senderId, "", sFile.toString());
+                                                    final MessageModel model = new MessageModel(senderId, "", uri.toString());
                                                     model.setTimestamp(new Date().getTime());
                                                     database.getReference().child("chats")
                                                             .child(receiverRoom)
@@ -495,7 +499,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                                                 obj.put("isSeen", "false");
                                                 database.getReference().child("Checkseen").child(receiverRoom)
                                                         .updateChildren(obj);
-                                                final MessageModel model = new MessageModel(senderId, "", sFile.toString());
+                                                final MessageModel model = new MessageModel(senderId, "", uri.toString());
                                                 model.setTimestamp(new Date().getTime());
                                                 binding.enterMessage.setText("");
                                                 database.getReference().child("chats")
