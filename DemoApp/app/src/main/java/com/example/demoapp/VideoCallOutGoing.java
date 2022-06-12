@@ -61,16 +61,32 @@ public class VideoCallOutGoing extends AppCompatActivity {
         obj.put(recieveId, "true");
         database.getReference().child("checkCall").child("inComeRoom").child(senderId)
                 .updateChildren(obj);
+        FirebaseDatabase.getInstance().getReference().child("checkBlock")
+                .child(senderRoom)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
 
-
-
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        try {
+                            if (!snapshot.child("isblockhide").getValue().toString().equals("true")) {
+                                HashMap<String, Object> obj = new HashMap<>();
+                                obj.put(recieveId, "true");
+                                database.getReference().child("checkCall").child("inComeRoom").child(senderId)
+                                        .updateChildren(obj);
+                            } else{}
+                        } catch (Exception e) {}
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
 
 
         Handler mHandler = new Handler();
         Runnable my_runnable = new Runnable() {
             @Override
             public void run() {
-                // your code here
+
             }
         };
         mHandler.postDelayed(new Runnable() {

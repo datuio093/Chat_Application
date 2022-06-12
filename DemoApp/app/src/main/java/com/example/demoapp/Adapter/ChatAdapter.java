@@ -6,10 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
@@ -139,18 +141,6 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 .updateChildren(obj);
 
 
-
-
-        Handler mHandler = new Handler();
-        Runnable my_runnable = new Runnable() {
-            @Override
-            public void run() {
-                // your code here
-            }
-        };
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
                 FirebaseDatabase.getInstance().getReference().child("Checkseen")
                         .child(senderRoom)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -172,9 +162,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
-                mHandler.postDelayed(this, 500);
-            }
-        }, 500);
+
 
 
 
@@ -189,6 +177,26 @@ public class ChatAdapter extends RecyclerView.Adapter {
 //                    return false;
 //                }
 //            });
+
+//            ((SenderViewHolder) holder).play.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    MediaPlayer mediaPlayer = new MediaPlayer();
+//                    try{
+//                        mediaPlayer.setDataSource(messageModel.getAudio());
+//                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                            @Override
+//                            public void onPrepared(MediaPlayer mediaPlayer) {
+//                                mediaPlayer.start();
+//                            }
+//                        });
+//                        mediaPlayer.prepare();
+//                    } catch (Exception e){}
+//                }
+//            });
+
+          //  Toast.makeText(context, messageModel.getAudio(), Toast.LENGTH_SHORT).show();
+
             ((SenderViewHolder) holder).senderMsg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -208,27 +216,22 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 }
             });
 
-
-
-
-            ((SenderViewHolder)holder).senderMsg.setText(messageModel.getMessage());
-
-//            if(messageModel.getImageMess().isEmpty() && messageModel.getMessage().isEmpty())
-//            {
-//                ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
-//                ((SenderViewHolder) holder).senderTime.setVisibility(View.GONE);
-//                ((SenderViewHolder) holder).imageView.setVisibility(View.GONE);
-//                ((SenderViewHolder)holder).checkSeen.setText(messageModel.getCheckSeen());
-//            }
-
-            if(!messageModel.getImageMess().isEmpty()   ){
+        //    Toast.makeText(context, messageModel.getImageMess() , Toast.LENGTH_LONG).show();
+            if(!messageModel.getImageMess().isEmpty()  ){
                 ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
                 ((SenderViewHolder) holder).senderTime.setVisibility(View.GONE);
+                ((SenderViewHolder) holder).imageView.setVisibility(View.VISIBLE);
+                Picasso.get().load(messageModel.getImageMess() ).into(((SenderViewHolder) holder).imageView);
 
-                Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((SenderViewHolder) holder).imageView);
             }
-            else
+            else {
+
+                ((SenderViewHolder)holder).senderMsg.setText(messageModel.getAudio());
                 ((SenderViewHolder) holder).imageView.setVisibility(View.GONE);
+
+            }
+
+
 
             Date date = new Date(messageModel.getTimestamp());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
@@ -239,22 +242,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
         }
         else
         {
-//            ((ReceiverViewHolder) holder).haha.setVisibility(View.GONE);
-//            ((ReceiverViewHolder) holder).like.setVisibility(View.GONE);
-//            ((ReceiverViewHolder) holder).said.setVisibility(View.GONE);
-//            ((ReceiverViewHolder) holder).itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View view) {
-//                    database.getReference().child("chats").child(senderRoom)
-//                            .child(messageModel.getMessageId()).child("message")
-//                            .setValue("tao la thang nhan");
-//
-//                    ((ReceiverViewHolder) holder).haha.setVisibility(View.VISIBLE);
-//                    ((ReceiverViewHolder) holder).like.setVisibility(View.VISIBLE);
-//                    ((ReceiverViewHolder) holder).said.setVisibility(View.VISIBLE);
-//                    return false;
-//                }
-//            });
+
             ((ReceiverViewHolder) holder).receiverMsg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -270,16 +258,18 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
                 }
             });
-
+     //       Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((ReceiverViewHolder) holder).imageView);
             ((ReceiverViewHolder)holder).receiverMsg.setText(messageModel.getMessage());
             if(!messageModel.getImageMess().isEmpty() ){
                 ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);
                 ((ReceiverViewHolder) holder).receiverTime.setVisibility(View.GONE);
-            Picasso.get().load(messageModel.getImageMess().toString()).placeholder(R.drawable.avatar).into(((ReceiverViewHolder) holder).imageView);
+                Picasso.get().load( messageModel.getImageMess() ).placeholder(R.drawable.avatar).into(((ReceiverViewHolder) holder).imageView);
+
             }
             else
-
                 ((ReceiverViewHolder) holder).imageView.setVisibility(View.GONE);
+
+
             Date date = new Date(messageModel.getTimestamp());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
             String strDate = simpleDateFormat.format(date);
@@ -318,10 +308,11 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public class SenderViewHolder extends RecyclerView.ViewHolder{
         TextView senderMsg, senderTime, checkSeen;
         ImageView imageView;
+        Button play;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
 
-
+            play = itemView.findViewById(R.id.btn_audio_play);
             senderMsg = itemView.findViewById(R.id.senderText);
             senderTime = itemView.findViewById(R.id.senderTime);
             imageView = itemView.findViewById(R.id.image_sent);

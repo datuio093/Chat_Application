@@ -1,20 +1,28 @@
 package com.example.demoapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
+import com.example.demoapp.Models.MessageModel;
 import com.example.demoapp.databinding.ActivityVideoCallComingBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -45,7 +53,32 @@ public class VideoCallComing extends AppCompatActivity {
         final String senderRoom = senderId + recieveId;
         final String receiverRoom = recieveId + senderId;
 
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseDatabase.getInstance().getReference().child("checkCall")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                try {
+                                    if(!snapshot.child("inComeRoom").child(recieveId).child(senderId).getValue().toString().equals("true") )
+                                    {
+                                       Intent intent = new Intent(VideoCallComing.this,MainActivity.class);
+                                       startActivity(intent);
+                                        mHandler.removeCallbacksAndMessages(null);
+                                    }
+                                }catch(Exception e){ }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
 
+
+                mHandler.postDelayed(this, 1000);
+            }
+        }, 1000);
 
         binding.btnAppect.setOnClickListener(new View.OnClickListener() {  /// đồng ý trả lời
             @Override
@@ -82,7 +115,7 @@ public class VideoCallComing extends AppCompatActivity {
                 database.getReference().child("checkCall").child("outComeRoom").child(recieveId)
                         .updateChildren(obj);
 
-                Intent intent = new Intent(VideoCallComing.this ,ChatDetailActivity.class );
+                Intent intent = new Intent(VideoCallComing.this ,MainActivity.class );
                 startActivity(intent);
             }
         });

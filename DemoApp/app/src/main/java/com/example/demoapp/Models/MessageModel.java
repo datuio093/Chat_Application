@@ -1,27 +1,39 @@
 package com.example.demoapp.Models;
 
 public class MessageModel {
-    String uId, message, messageId,imagemess,checkSeen;
+    String uId, message, messageId,imageMess, audio;
     Long timestamp;
 
-    public MessageModel(String uId, String message, Long timestamp ,  String imagemess) {
+    public MessageModel(String uId, String message, Long timestamp ,  String imageMess) {
         this.uId = uId;
         this.message = message;
         this.timestamp = timestamp;
-        this.imagemess = imagemess;
+        this.imageMess = imageMess;
     }
 
-    public MessageModel(String uId, String message ,String imagemess) {
+    public MessageModel(String uId, String message ,String imageMess,String audio) {
         this.uId = uId;
         this.message = message;
-        this.imagemess = imagemess;
+        this.imageMess = imageMess;
+        this.audio = audio;
     }
-    public MessageModel(String uId, String message ,String imagemess, String checkseen) {
-        this.uId = uId;
-        this.message = message;
-        this.imagemess = imagemess;
-        this.checkSeen = checkseen;
+
+    public String getAudio() {
+        return audio;
     }
+
+    public void setAudio(String audio) {
+        this.audio = audio;
+    }
+
+
+
+//    public MessageModel(String uId, String message ,String imageMess, String checkseen) {
+//        this.uId = uId;
+//        this.message = message;
+//        this.imageMess = imageMess;
+//        this.checkSeen = checkseen;
+//    }
 
 
 
@@ -40,11 +52,11 @@ public class MessageModel {
     }
 
     public String getImageMess() {
-        return imagemess;
+        return imageMess;
     }
 
-    public void setImageMess(String imagemess) {
-        this.imagemess = imagemess;
+    public void setImageMess(String imageMess) {
+        this.imageMess = imageMess;
     }
 
     public String getMessage() {
@@ -73,11 +85,11 @@ public class MessageModel {
 
 
 
-    public String getCheckSeen() {
-        return checkSeen;
-    }
-
-    public void setCheckSeen(String checkSeen) {
-        this.checkSeen = checkSeen;
-    }
+//    public String getCheckSeen() {
+//        return checkSeen;
+//    }
+//
+//    public void setCheckSeen(String checkSeen) {
+//        this.checkSeen = checkSeen;
+//    }
 }

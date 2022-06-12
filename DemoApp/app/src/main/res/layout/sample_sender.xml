@@ -60,7 +60,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/image_sent_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,11 +70,19 @@
             android:id="@+id/image_sent"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginLeft="6dp"
-            android:background="@drawable/bg_story"
-            tools:ignore="MissingConstraints"></ImageView>
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="15dp">
+        </ImageView>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/btn_audio_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CLICK">
+        </Button>
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
