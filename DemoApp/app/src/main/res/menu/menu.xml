@@ -64,19 +64,19 @@
                 android:theme="@style/AppTheme"
                 android:iconTint="@color/black"
                 android:icon="@drawable/ic_baseline_settings_24"
-                android:title="Ngủ" />
+                android:title="Sleeping" />
             <item android:id="@+id/ranh"
                 android:hardwareAccelerated="false"
                 android:largeHeap="true"
                 android:theme="@style/AppTheme"
                 android:icon="@drawable/ic_baseline_settings_24"
-                android:title="Rảnh" />
+                android:title="Free" />
             <item android:id="@+id/lamviec"
                 android:hardwareAccelerated="false"
                 android:largeHeap="true"
                 android:theme="@style/AppTheme"
                 android:icon="@drawable/ic_baseline_settings_24"
-                android:title="Làm Việc" />
+                android:title="Working" />
         </menu>
     </item>
 
@@ -88,7 +88,16 @@
                 android:largeHeap="true"
                 android:theme="@style/AppTheme"
                 android:icon="@drawable/ic_baseline_settings_24"
-                android:title="Tạo Tin">
+                android:title="Create Story">
+
+            </item>
+
+            <item android:id="@+id/delete_story"
+                android:hardwareAccelerated="false"
+                android:largeHeap="true"
+                android:theme="@style/AppTheme"
+                android:icon="@drawable/ic_baseline_settings_24"
+                android:title="Delete Story">
 
             </item>
         </menu>

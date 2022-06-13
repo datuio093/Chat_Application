@@ -9,7 +9,7 @@ import android.os.Handler;
 import android.view.View;
 
 import com.example.demoapp.Models.MessageModel;
-import com.example.demoapp.databinding.ActivityVideoCallComingBinding;
+import com.example.demoapp.databinding.ActivityAudioCallComingBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,9 +26,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 
-public class VideoCallComing extends AppCompatActivity {
+public class AudioCallComing extends AppCompatActivity {
 
-    ActivityVideoCallComingBinding binding;
+    ActivityAudioCallComingBinding binding;
     FirebaseDatabase database;
     FirebaseAuth auth;
     @Override
@@ -36,7 +36,7 @@ public class VideoCallComing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().hide();
-        binding = ActivityVideoCallComingBinding.inflate(getLayoutInflater());
+        binding = ActivityAudioCallComingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         database = FirebaseDatabase.getInstance();
@@ -57,15 +57,15 @@ public class VideoCallComing extends AppCompatActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                FirebaseDatabase.getInstance().getReference().child("checkCall").child("Video")
+                FirebaseDatabase.getInstance().getReference().child("checkCall").child("Audio")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 try {
                                     if(!snapshot.child("inComeRoom").child(recieveId).child(senderId).getValue().toString().equals("true") )
                                     {
-                                       Intent intent = new Intent(VideoCallComing.this,MainActivity.class);
-                                       startActivity(intent);
+                                        Intent intent = new Intent(AudioCallComing.this,MainActivity.class);
+                                        startActivity(intent);
                                         mHandler.removeCallbacksAndMessages(null);
                                     }
                                 }catch(Exception e){ }
@@ -89,16 +89,16 @@ public class VideoCallComing extends AppCompatActivity {
 
                 HashMap<String, Object> obj = new HashMap<>();
                 obj.put(senderId , "true");
-                database.getReference().child("checkCall").child("Video").child("outComeRoom").child(recieveId)
+                database.getReference().child("checkCall").child("Audio").child("outComeRoom").child(recieveId)
                         .updateChildren(obj);
                 try {
-                        JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
-                     .setServerURL(new URL("https://meet.jit.si"))
-                     .setRoom(receiverRoom + senderRoom)
-                     .setWelcomePageEnabled(false)
-                     .build();
-                     JitsiMeetActivity.launch(VideoCallComing.this, options);
-                     finish();
+                    JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
+                            .setServerURL(new URL("https://meet.jit.si"))
+                            .setAudioOnly(true)
+                            .setRoom(receiverRoom + senderRoom)
+                            .build();
+                    JitsiMeetActivity.launch(AudioCallComing.this, options);
+                    finish();
                 }catch (Exception e){}
             }
         });
@@ -112,10 +112,10 @@ public class VideoCallComing extends AppCompatActivity {
 
                 HashMap<String, Object> obj = new HashMap<>();
                 obj.put(senderId , "false");
-                database.getReference().child("checkCall").child("Video").child("outComeRoom").child(recieveId)
+                database.getReference().child("checkCall").child("Audio").child("outComeRoom").child(recieveId)
                         .updateChildren(obj);
 
-                Intent intent = new Intent(VideoCallComing.this ,MainActivity.class );
+                Intent intent = new Intent(AudioCallComing.this ,MainActivity.class );
                 startActivity(intent);
             }
         });

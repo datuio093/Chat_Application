@@ -66,11 +66,11 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     String userImage = snapshot.child("profilePic").getValue().toString();
                     String userName = snapshot.child("userName").getValue().toString();
-                    String userStatus = snapshot.child("status").getValue().toString();
+//                    String userStatus = snapshot.child("status").getValue().toString();
 
                     Picasso.get().load(userImage).placeholder(R.drawable.avatar3).into(userProfileImage);
                     userProfileName.setText(userName);
-                    userProfileStatus.setText(userStatus);
+                 //   userProfileStatus.setText(userStatus);
 
                 }
                 else

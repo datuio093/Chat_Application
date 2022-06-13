@@ -16,13 +16,13 @@
         <EditText
             android:id="@+id/txt_story"
             android:backgroundTint="@color/white"
-            android:background="#0FFFFFFF"
+            android:background="#2FFFFFFF"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:ems="10"
             android:textColor="#FFFFFF"
             android:inputType="textPersonName"
-            android:textColorHint="#56FFFFFF"
+            android:textColorHint="#B7FFFFFF"
             android:hint="What are you thinking ??" />
 
         <ImageView
@@ -35,10 +35,10 @@
             android:id="@+id/Select_image"
    android:backgroundTint="#61FFFFFF"
             android:textColor="@color/black"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Select" />
+            android:text="Select image for your story" />
 
         <Button
             android:id="@+id/btn_share"

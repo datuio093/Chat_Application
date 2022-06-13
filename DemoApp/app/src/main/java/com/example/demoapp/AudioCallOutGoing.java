@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.demoapp.databinding.ActivityVideoCallOutGoingBinding;
+import com.example.demoapp.databinding.ActivityAudioCallOutComingBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,12 +26,12 @@ import org.jitsi.meet.sdk.JitsiMeetConferenceOptions;
 import java.net.URL;
 import java.util.HashMap;
 
-public class VideoCallOutGoing extends AppCompatActivity {
+public class AudioCallOutGoing extends AppCompatActivity {
     ImageView imageView;
     TextView tvname, tvprof;
     FloatingActionButton declinebtn;
     String receiver_url, receiver_prof, receiver_name, receiver_token;
-    ActivityVideoCallOutGoingBinding binding;
+    ActivityAudioCallOutComingBinding binding;
     FirebaseDatabase database;
     FirebaseAuth auth;
 
@@ -40,7 +40,7 @@ public class VideoCallOutGoing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().hide();
-        binding = ActivityVideoCallOutGoingBinding.inflate(getLayoutInflater());
+        binding = ActivityAudioCallOutComingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         database = FirebaseDatabase.getInstance();
@@ -59,7 +59,7 @@ public class VideoCallOutGoing extends AppCompatActivity {
 
         HashMap<String, Object> obj = new HashMap<>();
         obj.put(recieveId, "true");
-        database.getReference().child("checkCall").child("Video").child("inComeRoom").child(senderId)
+        database.getReference().child("checkCall").child("Audio").child("inComeRoom").child(senderId)
                 .updateChildren(obj);
         FirebaseDatabase.getInstance().getReference().child("checkBlock")
                 .child(senderRoom)
@@ -71,7 +71,7 @@ public class VideoCallOutGoing extends AppCompatActivity {
                             if (!snapshot.child("isblockhide").getValue().toString().equals("true")) {
                                 HashMap<String, Object> obj = new HashMap<>();
                                 obj.put(recieveId, "true");
-                                database.getReference().child("checkCall").child("Video").child("inComeRoom").child(senderId)
+                                database.getReference().child("checkCall").child("Audio").child("inComeRoom").child(senderId)
                                         .updateChildren(obj);
                             } else{}
                         } catch (Exception e) {}
@@ -98,32 +98,29 @@ public class VideoCallOutGoing extends AppCompatActivity {
                     public void onClick(View view) {
                         HashMap<String, Object> obj = new HashMap<>();
                         obj.put(recieveId, "false");
-                        database.getReference().child("checkCall").child("Video").child("inComeRoom").child(senderId)
+                        database.getReference().child("checkCall").child("Audio").child("inComeRoom").child(senderId)
                                 .updateChildren(obj);
                         mHandler.removeCallbacksAndMessages(null);
-                        Intent intent = new Intent(VideoCallOutGoing.this , MainActivity.class);
+                        Intent intent = new Intent(AudioCallOutGoing.this , MainActivity.class);
                         startActivity(intent);
                     }
                 });
 
                 final String senderRoom = senderId + recieveId;
                 final String receiverRoom = recieveId + senderId;
-                FirebaseDatabase.getInstance().getReference().child("checkCall").child("Video")
+                FirebaseDatabase.getInstance().getReference().child("checkCall").child("Audio")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 try {
                                     if(snapshot.child("outComeRoom").child(senderId).child(recieveId).getValue().toString().equals("true") )
                                     {
-                                        HashMap<String, Object> obj = new HashMap<>();
-
-
                                         JitsiMeetConferenceOptions options = new JitsiMeetConferenceOptions.Builder()
                                                 .setServerURL(new URL("https://meet.jit.si"))
+                                                .setAudioOnly(true)
                                                 .setRoom(senderRoom+receiverRoom)
-                                                .setWelcomePageEnabled(false)
                                                 .build();
-                                        JitsiMeetActivity.launch(VideoCallOutGoing.this, options);
+                                        JitsiMeetActivity.launch(AudioCallOutGoing.this, options);
                                         finish();
                                         mHandler.removeCallbacksAndMessages(null);
                                     }
@@ -131,9 +128,6 @@ public class VideoCallOutGoing extends AppCompatActivity {
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                obj.put(recieveId, "false");
-                                database.getReference().child("checkCall").child("Video").child("inComeRoom").child(senderId)
-                                        .updateChildren(obj);
                             }
                         });
                 mHandler.postDelayed(this, 1000);

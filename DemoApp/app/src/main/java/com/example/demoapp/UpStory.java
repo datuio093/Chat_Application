@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.demoapp.databinding.ActivityUpStoryBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -65,10 +66,11 @@ public class UpStory extends AppCompatActivity {
                 obj4.put("laugh", 0 );
                 database.getReference().child("Story").child(mAuth.getUid())
                         .updateChildren(obj4);
-
-
+                
 
                 database.getReference().child("FeelStory").child(mAuth.getUid()).removeValue();
+
+                Toast.makeText(UpStory.this, "Your story has been uploaded.", Toast.LENGTH_SHORT).show();
 
 
             }

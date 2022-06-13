@@ -177,6 +177,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 startActivity(intent3);
                 return false;
 
+            case R.id.delete_story:
+                database.getReference().child("Story").child(mAuth.getUid())
+                        .removeValue();
+                HashMap<String, Object> obj5 = new HashMap<>();
+                obj5.put("checkStory", "false");
+                database.getReference().child("Users").child(mAuth.getUid())
+                        .updateChildren(obj5);
+
 
 
         }

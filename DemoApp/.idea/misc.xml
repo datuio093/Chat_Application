@@ -80,6 +80,7 @@
         <entry key="..\:/DemoApp/app/src/main/res/menu/menu_nav.xml" value="0.26927083333333335" />
         <entry key="..\:/DemoApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2405" />
         <entry key="..\:/DemoApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2405" />
+        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1935" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/about.xml" value="0.217" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/about_shape.xml" value="0.198" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/bg_et_message.xml" value="0.217" />
@@ -97,6 +98,7 @@
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.154" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.198" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/ic_baseline_sentiment_very_satisfied_24.xml" value="0.175" />
+        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/ic_google.xml" value="0.1935" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/item_sign_in.xml" value="0.198" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/main_chat.xml" value="0.206" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/drawable/main_toolbar.xml" value="0.1925" />
@@ -116,25 +118,29 @@
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout-land/users_display_layout.xml" value="0.22971781305114639" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/aboutus.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_audio.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_audio_call_coming.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_audio_call_out_coming.xml" value="0.2604166666666667" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_begin.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_change_pass_word.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_chat_detail.xml" value="0.264" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_find_friends.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_forget_pass_word.xml" value="0.27447916666666666" />
-        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_profile.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_settings.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_sign_in.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_sign_up.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_up_story.xml" value="0.2" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_video_call_coming.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/activity_video_call_out_going.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/app_bar_layout.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/check_seen.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/fragment_chats.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/fragment_contacts.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/fragment_status.xml" value="0.2713541666666667" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/layout_header_nav.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/sample_reciever.xml" value="0.2713541666666667" />
-        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/sample_sender.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/sample_sender.xml" value="0.25" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/sample_show_contact.xml" value="0.264" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/sample_show_user.xml" value="0.4" />
         <entry key="..\:/Users/LENOVO/Desktop/Chat_Aplication/DemoApp/app/src/main/res/layout/sample_show_user_story.xml" value="0.264" />

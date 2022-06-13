@@ -1,6 +1,7 @@
 package com.example.demoapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.demoapp.ChatDetailActivity;
 import com.example.demoapp.Models.Contacts;
 import com.example.demoapp.Models.Users;
 import com.example.demoapp.R;
@@ -38,10 +40,18 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Users users = list.get(position);
-        Picasso.get().load(users.getProfilePic()).placeholder(R.drawable.avatar3).into(holder.image);
+        Picasso.get().load(users.getProfilePic()).into(holder.image);
         holder.name.setText(users.getUserName());
 
      holder.check_contact.setVisibility(View.GONE);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
     }
 

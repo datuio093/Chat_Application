@@ -12,6 +12,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginRight="17dp"
         android:background="@drawable/bg_sender"
         android:maxWidth="310dp"
@@ -54,32 +55,50 @@
             android:layout_marginBottom="4dp"
             android:text="15:45 pm"
             android:textSize="10sp"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <RelativeLayout
+
         android:id="@+id/image_sent_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="196dp">
+        android:layout_alignParentRight="true"
+        >
 
         <ImageView
             android:id="@+id/image_sent"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="15dp">
+
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
         </ImageView>
 
-        <Button
-            android:id="@+id/btn_audio_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CLICK">
-        </Button>
+
+            <ImageView
+
+                android:id="@+id/btn_audio_play"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_story"
+                android:src="@drawable/play"></ImageView>
+
+
+        <ImageView
+            android:id="@+id/btn_audio_pause"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+
+            android:background="@drawable/bg_story"
+            android:src="@drawable/pause"></ImageView>
 
     </RelativeLayout>
 
@@ -87,11 +106,16 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image_sent_total"
-        android:layout_marginLeft="250dp"
 
-        android:layout_marginBottom="20dp">
+        android:layout_below="@+id/image_sent_total"
+        android:layout_marginLeft="240dp"
+        >
+
         <TextView
+
+            android:textColor="#000000"
+
+            android:layout_marginTop="45dp"
             android:id="@+id/check_seen_sender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

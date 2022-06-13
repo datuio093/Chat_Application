@@ -10,18 +10,22 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.demoapp.ChatDetailActivity;
+import com.example.demoapp.MainActivity;
 import com.example.demoapp.Models.MessageModel;
 import com.example.demoapp.R;
 import com.example.demoapp.VideoCallComing;
@@ -141,21 +145,38 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 .updateChildren(obj);
 
 
-                FirebaseDatabase.getInstance().getReference().child("Checkseen")
-                        .child(senderRoom)
+
+
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseDatabase.getInstance().getReference().child("checkCall").child("Video")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Date date = new Date(messageModel.getTimestamp());
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
-                                String strDate = simpleDateFormat.format(date);
-                                //        ((SenderViewHolder)holder).senderTime.setText(strDate.toString());
                                 try {
-                                    if (snapshot.child("isSeen").getValue().toString().equals("true") && position == messageModels.size() - 1 ) {
-                                        ((SenderViewHolder) holder).checkSeen.setText("Seen at " + strDate.toString());
-                                        ((SenderViewHolder) holder).checkSeen.setVisibility(View.VISIBLE);
-                                    } else
-                                        ((SenderViewHolder) holder).checkSeen.setVisibility(View.GONE);
+                                    FirebaseDatabase.getInstance().getReference().child("Checkseen")
+                                            .child(senderRoom)
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    Date date = new Date(messageModel.getTimestamp());
+                                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
+                                                    String strDate = simpleDateFormat.format(date);
+                                                    //        ((SenderViewHolder)holder).senderTime.setText(strDate.toString());
+                                                    try {
+                                                        if (snapshot.child("isSeen").getValue().toString().equals("true") && position == messageModels.size() - 1 ) {
+                                                            ((SenderViewHolder) holder).checkSeen.setText("Seen at " + strDate.toString());
+                                                            ((SenderViewHolder) holder).checkSeen.setVisibility(View.VISIBLE);
+                                                        } else
+                                                           ((SenderViewHolder) holder).checkSeen.setVisibility(View.GONE);
+                                                    }catch(Exception e){ }
+                                                }
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                }
+                                            });
                                 }catch(Exception e){ }
                             }
                             @Override
@@ -164,84 +185,133 @@ public class ChatAdapter extends RecyclerView.Adapter {
                         });
 
 
+                mHandler.postDelayed(this, 5000);
+            }
+        }, 5000);
 
 
 
         if(holder.getClass() == SenderViewHolder.class)
         {
-//
-//            ((SenderViewHolder) holder).imageView.setOnClickListener(new() {
-//                @Override
-//                public boolean onLongClick(View view) {
-//
-//                    return false;
-//                }
-//            });
 
-//            ((SenderViewHolder) holder).play.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    MediaPlayer mediaPlayer = new MediaPlayer();
-//                    try{
-//                        mediaPlayer.setDataSource(messageModel.getAudio());
-//                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//                            @Override
-//                            public void onPrepared(MediaPlayer mediaPlayer) {
-//                                mediaPlayer.start();
-//                            }
-//                        });
-//                        mediaPlayer.prepare();
-//                    } catch (Exception e){}
-//                }
-//            });
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            ((SenderViewHolder) holder).pause.setVisibility(View.GONE);
+            ((SenderViewHolder) holder).play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                  //  Toast.makeText(context, messageModel.getAudio(), Toast.LENGTH_SHORT).show();
 
-          //  Toast.makeText(context, messageModel.getAudio(), Toast.LENGTH_SHORT).show();
+                    try{
+                        mediaPlayer.setDataSource(messageModel.getAudio());
+                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mediaPlayer) {
+                                ((SenderViewHolder) holder).pause.setVisibility(View.VISIBLE);
+                                ((SenderViewHolder) holder).play.setVisibility(View.GONE);
+                                mediaPlayer.start();
+                            }
+                        });
+                        mediaPlayer.prepare();
+                    } catch (Exception e){}
+                }
+            });
+
+//       Uri uri = Uri.parse("https://www.youtube.com/watch?v=SrPHLj_q_OQ");
+//
+//                    ((SenderViewHolder) holder).video.setVideoURI();
+//                    ((SenderViewHolder) holder).video.start();
+//
+
+            ((SenderViewHolder) holder).pause.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                  if(mediaPlayer.isPlaying()==true){
+                      mediaPlayer.stop();
+                      ((SenderViewHolder) holder).pause.setVisibility(View.GONE);
+                      ((SenderViewHolder) holder).play.setVisibility(View.VISIBLE);
+                  }
+                }
+            });
 
             ((SenderViewHolder) holder).senderMsg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     try {
                         Uri uri = Uri.parse(((SenderViewHolder) holder).senderMsg.getText().toString());
                         context.startActivity(new Intent(Intent.ACTION_VIEW,uri));
-//                        database.getReference().child("chats").child(senderRoom)
-//                                .child(  messageModel.getMessageId()    ).child("message")
-//                                .setValue("tao la thang gui");
                     }
                     catch (Exception e){
 
                     };
-
-
                 }
             });
 
-        //    Toast.makeText(context, messageModel.getImageMess() , Toast.LENGTH_LONG).show();
-            if(!messageModel.getImageMess().isEmpty()  ){
+
+            if(!messageModel.getImageMess().isEmpty()){  // neu gui hinh = true
+                ((SenderViewHolder) holder).play.setVisibility(View.GONE);
                 ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
                 ((SenderViewHolder) holder).senderTime.setVisibility(View.GONE);
+
                 ((SenderViewHolder) holder).imageView.setVisibility(View.VISIBLE);
-                Picasso.get().load(messageModel.getImageMess() ).into(((SenderViewHolder) holder).imageView);
+                Picasso.get().load(messageModel.getImageMess()).into(((SenderViewHolder) holder).imageView);
+            }
+            else if(!messageModel.getAudio().isEmpty()){  // check gui audio = true
+                ((SenderViewHolder) holder).imageView.setVisibility(View.GONE);
+                ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
+                ((SenderViewHolder) holder).senderTime.setVisibility(View.GONE);
+
+                ((SenderViewHolder) holder).play.setVisibility(View.VISIBLE);
 
             }
             else {
-
-                ((SenderViewHolder)holder).senderMsg.setText(messageModel.getAudio());
                 ((SenderViewHolder) holder).imageView.setVisibility(View.GONE);
+                ((SenderViewHolder) holder).play.setVisibility(View.GONE);
+
 
             }
-
-
-
+            ((SenderViewHolder) holder).senderMsg.setText(messageModel.getMessage());
+            ((SenderViewHolder) holder).senderTime.setText(messageModel.getMessage());
             Date date = new Date(messageModel.getTimestamp());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
             String strDate = simpleDateFormat.format(date);
             ((SenderViewHolder)holder).senderTime.setText(strDate.toString());
 
-           // ((SenderViewHolder)holder).checkSeenS.setText("Đã Xem");
         }
         else
         {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            ((ReceiverViewHolder) holder).pause.setVisibility(View.GONE);
+            ((ReceiverViewHolder) holder).play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //  Toast.makeText(context, messageModel.getAudio(), Toast.LENGTH_SHORT).show();
+
+                    try{
+                        mediaPlayer.setDataSource(messageModel.getAudio());
+                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mediaPlayer) {
+                                ((ReceiverViewHolder) holder).pause.setVisibility(View.VISIBLE);
+                                ((ReceiverViewHolder) holder).play.setVisibility(View.GONE);
+                                mediaPlayer.start();
+                            }
+                        });
+                        mediaPlayer.prepare();
+                    } catch (Exception e){}
+                }
+            });
+            ((ReceiverViewHolder) holder).pause.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(mediaPlayer.isPlaying()==true){
+                        mediaPlayer.stop();
+                        ((ReceiverViewHolder) holder).pause.setVisibility(View.GONE);
+                        ((ReceiverViewHolder) holder).play.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
 
             ((ReceiverViewHolder) holder).receiverMsg.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -263,13 +333,22 @@ public class ChatAdapter extends RecyclerView.Adapter {
             if(!messageModel.getImageMess().isEmpty() ){
                 ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);
                 ((ReceiverViewHolder) holder).receiverTime.setVisibility(View.GONE);
-                Picasso.get().load( messageModel.getImageMess() ).placeholder(R.drawable.avatar).into(((ReceiverViewHolder) holder).imageView);
+
+                    Picasso.get().load(messageModel.getImageMess()).placeholder(R.drawable.avatar).into(((ReceiverViewHolder) holder).imageView);
+
 
             }
             else
                 ((ReceiverViewHolder) holder).imageView.setVisibility(View.GONE);
 
-
+            if(messageModel.getAudio().isEmpty()){
+                ((ReceiverViewHolder) holder).play.setVisibility(View.GONE);
+            }
+            else {
+                ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);
+                ((ReceiverViewHolder) holder).receiverTime.setVisibility(View.GONE);
+                ((ReceiverViewHolder) holder).play.setVisibility(View.VISIBLE);
+            }
             Date date = new Date(messageModel.getTimestamp());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
             String strDate = simpleDateFormat.format(date);
@@ -289,17 +368,15 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public class ReceiverViewHolder extends RecyclerView.ViewHolder {
         TextView receiverMsg, receiverTime,checkSeenR;
         ImageView imageView,haha,like,said;
-
+        ImageView play,pause;
         public ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receiverMsg = itemView.findViewById(R.id.receiverText);
             receiverTime = itemView.findViewById(R.id.receiverTime);
-        //   checkSeenR = itemView.findViewById(R.id.name_nav);
             imageView = itemView.findViewById(R.id.image_sent);
+            play = itemView.findViewById(R.id.btn_audio_play);
+            pause = itemView.findViewById(R.id.btn_audio_pause);
 
-//            haha = itemView.findViewById(R.id.btn_like);
-//            like = itemView.findViewById(R.id.likee);
-//            said = itemView.findViewById(R.id.saidd);
 
         }
 
@@ -308,15 +385,18 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public class SenderViewHolder extends RecyclerView.ViewHolder{
         TextView senderMsg, senderTime, checkSeen;
         ImageView imageView;
-        Button play;
+        ImageView play,pause;
+        VideoView video;
         public SenderViewHolder(@NonNull View itemView) {
             super(itemView);
 
             play = itemView.findViewById(R.id.btn_audio_play);
+            pause = itemView.findViewById(R.id.btn_audio_pause);
             senderMsg = itemView.findViewById(R.id.senderText);
             senderTime = itemView.findViewById(R.id.senderTime);
             imageView = itemView.findViewById(R.id.image_sent);
             checkSeen = itemView.findViewById(R.id.check_seen_sender);
+            //video = itemView.findViewById(R.id.videoView2);
         }
     }
 }

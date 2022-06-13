@@ -79,10 +79,10 @@ public class ContactsFragment extends Fragment {
             UserRef.child(getRef(holder.getAdapterPosition()).getKey()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if((snapshot.exists()) && (snapshot.hasChild("image")))
+                    if((snapshot.exists()) && (snapshot.hasChild("profilePic")))
                     {
 
-                        String userImage = snapshot.child("image").getValue().toString();
+                        String userImage = snapshot.child("profilePic").getValue().toString();
                         String profileName = snapshot.child("userName").getValue().toString();
                         String profileStatus = snapshot.child("status").getValue().toString();
                         holder.userName.setText(profileName);

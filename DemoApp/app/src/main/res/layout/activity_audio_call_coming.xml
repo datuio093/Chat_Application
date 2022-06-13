@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VideoCallOutGoing"
+    tools:context=".VideoCallComing"
     android:background="@drawable/w1">
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,13 +16,15 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:orientation="vertical">
-        <de.hdodenhof.circleimageview.CircleImageView
 
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="match_parent"
+
             android:layout_height="120dp"
             android:id="@+id/profileimagecall"
             android:src="@drawable/avatar"
-            app:civ_border_color="#FF000000"
+            app:civ_border_color="#000000"
             app:civ_border_width="2dp"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,17 +53,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Incoming Video Call ..."
+            android:text="Incoming Audio Call ..."
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"/>
 
-        <ImageView
-            android:id="@+id/btn_appect"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:src="@drawable/failed"
-            android:text="APPECT" />
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:id="@+id/btn_appect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/accept"
+                android:gravity="left"
+                android:text="Decline"/>
+
+            <ImageView
+                android:id="@+id/btn_decline"
+                android:src="@drawable/failed"
+                android:layout_marginStart="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="APPECT"/>
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

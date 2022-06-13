@@ -146,7 +146,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                FirebaseDatabase.getInstance().getReference().child("checkCall")
+                FirebaseDatabase.getInstance().getReference().child("checkCall").child("Video")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -172,7 +172,41 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
             }
         }, 1000);
 
+        Handler mHandler1 = new Handler();
+        Runnable my_runnable1 = new Runnable() {
+            @Override
+            public void run() {
+                // your code here
+            }
+        };
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseDatabase.getInstance().getReference().child("checkCall").child("Audio")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                try {
+                                    if(snapshot.child("inComeRoom").child(recieveId).child(senderId).getValue().toString().equals("true") )
+                                    {
+                                        Intent intent = new Intent(ChatDetailActivity.this, AudioCallComing.class);
+                                        intent.putExtra("userID", recieveId);
+                                        intent.putExtra("userName", userName);
+                                        intent.putExtra("profilePic", profilePic);
+                                        startActivity(intent);
+                                        mHandler1.removeCallbacksAndMessages(null);
+                                    }
+                                }catch(Exception e){ }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
 
+
+                mHandler1.postDelayed(this, 1000);
+            }
+        }, 1000);
 
 
 
@@ -340,6 +374,17 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                 startActivity(intent);
             }
         });
+        binding.tvCallAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(ChatDetailActivity.this, AudioCallOutGoing.class);
+                intent1.putExtra("userID", recieveId);
+                intent1.putExtra("userName", userName);
+                intent1.putExtra("profilePic", profilePic);
+                startActivity(intent1);
+            }
+        });
+
 
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -430,7 +475,23 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
 
             }
         });
+
+
+
+        binding.sendItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, 25);
+
+            }
+        });
+
     }
+
+
 
 
     @Override
@@ -443,13 +504,14 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
         String recieveId = getIntent().getStringExtra("userID");      // lấy dữ liệu userID truyền qua thông qua key = userID
         final String senderRoom = senderId + recieveId;
         final String receiverRoom = recieveId + senderId;
+
             if (requestCode == 25) {
                 if (resultCode == Activity.RESULT_OK) {
                     Uri sFile = data.getData();
                     //   binding.profileImage.setImageURI(sFile);
 
                     final StorageReference reference = storage.getReference().child("profile_pic_mess")
-                            .child(FirebaseAuth.getInstance().getUid());
+                            .child(senderRoom).child(data.toString());
                     reference.putFile(sFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -465,12 +527,13 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                                                     try {
                                                         if (snapshot.child("isblockhide").getValue().toString().equals("true") != true) {
 
+
                                                             HashMap<String, Object> obj = new HashMap<>();
                                                             obj.put("isSeen", "false");
                                                             database.getReference().child("Checkseen").child(receiverRoom)
                                                                     .updateChildren(obj);
 
-                                                            final MessageModel model = new MessageModel(senderId, "", uri.toString(),"");
+                                                            final MessageModel model = new MessageModel(senderId, "", uri.toString(), "");
                                                             model.setTimestamp(new Date().getTime());
                                                             binding.enterMessage.setText("");
                                                             database.getReference().child("chats")
@@ -495,7 +558,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                                                             database.getReference().child("Checkseen").child(receiverRoom)
                                                                     .updateChildren(obj);
                                                             String message = binding.enterMessage.getText().toString();
-                                                            final MessageModel model = new MessageModel(senderId, "", uri.toString(),"");
+                                                            final MessageModel model = new MessageModel(senderId, "", uri.toString(), "");
                                                             model.setTimestamp(new Date().getTime());
                                                             database.getReference().child("chats")
                                                                     .child(receiverRoom)
@@ -507,7 +570,7 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                                                         obj.put("isSeen", "false");
                                                         database.getReference().child("Checkseen").child(receiverRoom)
                                                                 .updateChildren(obj);
-                                                        final MessageModel model = new MessageModel(senderId, "", uri.toString(),"");
+                                                        final MessageModel model = new MessageModel(senderId, "", uri.toString(), "");
                                                         model.setTimestamp(new Date().getTime());
                                                         binding.enterMessage.setText("");
                                                         database.getReference().child("chats")
@@ -547,71 +610,35 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                 }
             }
 
-        if (requestCode == 24) {
-            if (resultCode == Activity.RESULT_OK) {
-                Uri sFile = data.getData();
-                //   binding.profileImage.setImageURI(sFile);
 
-                final StorageReference reference = storage.getReference().child("profile_audio_mess")
-                        .child(FirebaseAuth.getInstance().getUid());
-                reference.putFile(sFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // thêm hàm ở đây
-                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                FirebaseDatabase.getInstance().getReference().child("checkBlock")
-                                        .child(receiverRoom)
-                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                try {
-                                                    if (snapshot.child("isblockhide").getValue().toString().equals("true") != true) {
+    if (requestCode == 24) {
+        if (resultCode == Activity.RESULT_OK) {
+            Uri sFile = data.getData();
+            //   binding.profileImage.setImageURI(sFile);
 
-                                                        HashMap<String, Object> obj = new HashMap<>();
-                                                        obj.put("isSeen", "false");
-                                                        database.getReference().child("Checkseen").child(receiverRoom)
-                                                                .updateChildren(obj);
+            final StorageReference reference = storage.getReference().child("profile_audio_mess")
+                    .child(senderRoom).child(data.toString());
+            reference.putFile(sFile).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // thêm hàm ở đây
+                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            FirebaseDatabase.getInstance().getReference().child("checkBlock")
+                                    .child(receiverRoom)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            try {
+                                                if (snapshot.child("isblockhide").getValue().toString().equals("true") != true) {
 
-                                                        final MessageModel model = new MessageModel(senderId, "","",uri.toString());
-                                                        model.setTimestamp(new Date().getTime());
-                                                        binding.enterMessage.setText("");
-                                                        database.getReference().child("chats")
-                                                                .child(senderRoom)
-                                                                .push()
-                                                                .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void unused) {
-                                                                database.getReference().child("chats")
-                                                                        .child(receiverRoom)
-                                                                        .push()
-                                                                        .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                    @Override
-                                                                    public void onSuccess(Void unused) {
-                                                                    }
-                                                                });
-                                                            }
-                                                        });
-                                                    } else {
-                                                        HashMap<String, Object> obj = new HashMap<>();
-                                                        obj.put("isSeen", "false");
-                                                        database.getReference().child("Checkseen").child(receiverRoom)
-                                                                .updateChildren(obj);
-                                                        String message = binding.enterMessage.getText().toString();
-                                                        final MessageModel model = new MessageModel(senderId, "","",uri.toString());
-                                                        model.setTimestamp(new Date().getTime());
-                                                        database.getReference().child("chats")
-                                                                .child(receiverRoom)
-                                                                .push()
-                                                                .setValue(model);
-                                                    }
-                                                } catch (Exception e) {
                                                     HashMap<String, Object> obj = new HashMap<>();
                                                     obj.put("isSeen", "false");
                                                     database.getReference().child("Checkseen").child(receiverRoom)
                                                             .updateChildren(obj);
-                                                    final MessageModel model = new MessageModel(senderId,"","", uri.toString());
+
+                                                    final MessageModel model = new MessageModel(senderId, "", "", uri.toString());
                                                     model.setTimestamp(new Date().getTime());
                                                     binding.enterMessage.setText("");
                                                     database.getReference().child("chats")
@@ -626,32 +653,72 @@ public class ChatDetailActivity extends AppCompatActivity implements NavigationV
                                                                     .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void unused) {
-
                                                                 }
                                                             });
                                                         }
                                                     });
+                                                } else {
+                                                    HashMap<String, Object> obj = new HashMap<>();
+                                                    obj.put("isSeen", "false");
+                                                    database.getReference().child("Checkseen").child(receiverRoom)
+                                                            .updateChildren(obj);
+                                                    String message = binding.enterMessage.getText().toString();
+                                                    final MessageModel model = new MessageModel(senderId, "", "", uri.toString());
+                                                    model.setTimestamp(new Date().getTime());
+                                                    database.getReference().child("chats")
+                                                            .child(receiverRoom)
+                                                            .push()
+                                                            .setValue(model);
                                                 }
+                                            } catch (Exception e) {
+                                                HashMap<String, Object> obj = new HashMap<>();
+                                                obj.put("isSeen", "false");
+                                                database.getReference().child("Checkseen").child(receiverRoom)
+                                                        .updateChildren(obj);
+                                                final MessageModel model = new MessageModel(senderId, "", "", uri.toString());
+                                                model.setTimestamp(new Date().getTime());
+                                                binding.enterMessage.setText("");
+                                                database.getReference().child("chats")
+                                                        .child(senderRoom)
+                                                        .push()
+                                                        .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        database.getReference().child("chats")
+                                                                .child(receiverRoom)
+                                                                .push()
+                                                                .setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void unused) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                });
                                             }
+                                        }
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-                                                binding.mainEnterMessage.setVisibility(View.VISIBLE);
-                                            }
-                                        });
-                            }
-                        });   // hết hàm
-                    }
-                });
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            binding.mainEnterMessage.setVisibility(View.VISIBLE);
+                                        }
+                                    });
+                        }
+                    });   // hết hàm
+                }
+            });
 
 
-            } else {
-                // Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
-                // startActivity(intent);
-            }
+        } else {
+            // Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
+            // startActivity(intent);
         }
-
     }
+    }
+
+
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
