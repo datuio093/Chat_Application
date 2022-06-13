@@ -15,7 +15,7 @@
                 android:largeHeap="true"
                 android:theme="@style/AppTheme"
                 android:iconTintMode="add"
-                android:icon="@drawable/ic_baseline_settings_24"
+                android:icon="@drawable/ic_baseline_lock_reset_24"
                 android:title="Change Password" />
         </menu>
     </item>
@@ -63,19 +63,21 @@
                 android:largeHeap="true"
                 android:theme="@style/AppTheme"
                 android:iconTint="@color/black"
-                android:icon="@drawable/ic_baseline_settings_24"
+                android:icon="@drawable/ic_baseline_hotel_24"
                 android:title="Sleeping" />
+
             <item android:id="@+id/ranh"
                 android:hardwareAccelerated="false"
                 android:largeHeap="true"
                 android:theme="@style/AppTheme"
-                android:icon="@drawable/ic_baseline_settings_24"
+                android:icon="@drawable/ic_baseline_lyrics_24"
                 android:title="Free" />
+
             <item android:id="@+id/lamviec"
                 android:hardwareAccelerated="false"
                 android:largeHeap="true"
                 android:theme="@style/AppTheme"
-                android:icon="@drawable/ic_baseline_settings_24"
+                android:icon="@drawable/ic_baseline_home_work_24"
                 android:title="Working" />
         </menu>
     </item>
@@ -87,7 +89,7 @@
                 android:hardwareAccelerated="false"
                 android:largeHeap="true"
                 android:theme="@style/AppTheme"
-                android:icon="@drawable/ic_baseline_settings_24"
+                android:icon="@drawable/ic_baseline_auto_stories_242"
                 android:title="Create Story">
 
             </item>
@@ -96,7 +98,7 @@
                 android:hardwareAccelerated="false"
                 android:largeHeap="true"
                 android:theme="@style/AppTheme"
-                android:icon="@drawable/ic_baseline_settings_24"
+                android:icon="@drawable/ic_baseline_delete_forever_24"
                 android:title="Delete Story">
 
             </item>

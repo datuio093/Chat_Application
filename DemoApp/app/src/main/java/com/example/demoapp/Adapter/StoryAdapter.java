@@ -52,9 +52,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
 
         Picasso.get().load(users.getProfilePic()).placeholder(R.drawable.avatar3).into(holder.image);
 
-try {
-    Picasso.get().load(users.getProfilePic()).into(holder.image2);
-} catch (Exception E) {}
+//try {
+//    Picasso.get().load(users.getProfilePic()).into(holder.image2);
+//} catch (Exception E) {}
 
 
         holder.userName.setText(users.getUserName());
